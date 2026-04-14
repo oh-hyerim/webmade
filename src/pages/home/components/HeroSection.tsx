@@ -6,7 +6,7 @@ export default function HeroSection() {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=modern%20minimalist%20professional%20office%20interior%20with%20large%20floor%20to%20ceiling%20windows%2C%20clean%20white%20and%20dark%20navy%20tones%2C%20contemporary%20workspace%20with%20soft%20natural%20light%2C%20architectural%20design%20studio%2C%20high%20ceiling%2C%20elegant%20atmosphere%2C%20no%20people%2C%20wide%20angle%20shot&width=1920&height=1080&seq=hero2001&orientation=landscape"
+          src="/images/01b397564d2c608b5e25e8b1204b3ff8.jpg"
           alt="웹메이드 히어로 배경"
           className="w-full h-full object-cover object-top"
         />

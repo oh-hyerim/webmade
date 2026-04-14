@@ -5,7 +5,7 @@ export default function CtaBanner() {
     <section className="relative py-24 md:py-32 overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=abstract%20dark%20navy%20blue%20professional%20background%20with%20subtle%20geometric%20light%20rays%20and%20soft%20glow%2C%20deep%20dark%20tones%2C%20minimal%20texture%2C%20elegant%20corporate%20backdrop%2C%20very%20subtle%20blue%20accent%20light%20on%20dark%20surface%2C%20wide%20panoramic&width=1920&height=700&seq=cta2001&orientation=landscape"
+          src="/images/6d11544f2cfb277bf1bfd4cd9b134278.jpg"
           alt="CTA 배경"
           className="w-full h-full object-cover object-top"
         />

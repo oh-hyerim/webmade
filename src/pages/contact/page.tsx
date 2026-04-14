@@ -125,7 +125,6 @@ export default function ContactPage() {
               </div>
             ) : (
               <form
-                data-readdy-form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-5"
               >

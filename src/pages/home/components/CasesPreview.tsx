@@ -10,21 +10,21 @@ interface CaseItem {
 
 const CASES: CaseItem[] = [
   {
-    customImg: 'https://storage.readdy-site.link/project_files/0beae8d9-c441-4cef-9fde-f217148e13ca/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.png?v=2f1bd716609de0a2b7838253cd0c5115',
+    customImg: 'images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.png',
     industry: '물류 / 배송',
     title: 'DK Express 홈페이지',
     point: '서비스 안내 + 상담 전환 최적화',
     url: 'https://dkexpress.us',
   },
   {
-    customImg: 'https://public.readdy.ai/ai/img_res/edited_95e9644b3e3e07ba8be394545b916746_4aaef9f9.jpg',
+    customImg: '/images/edited_95e9644b3e3e07ba8be394545b916746_4aaef9f9.jpg',
     industry: '출판',
     title: 'The Venue Times',
     point: '출판 서비스 안내 + 출간 상담 최적화',
     url: 'https://thevenuetimes.readdy.co',
   },
   {
-    customImg: 'https://public.readdy.ai/ai/img_res/edited_83c319ce3a638dbaf0f658d46172a195_52f88c2d.jpg',
+    customImg: '/images/edited_83c319ce3a638dbaf0f658d46172a195_52f88c2d.jpg',
     industry: '반려동물',
     title: '기억할개',
     point: '제작 서비스 안내 + 주문 전환 최적화',

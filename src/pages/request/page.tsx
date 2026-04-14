@@ -291,7 +291,6 @@ export default function RequestPage() {
         </div>
 
         <form
-          data-readdy-form
           id="homepage-request-form"
           onSubmit={handleSubmit}
           className="flex flex-col gap-6"
