@@ -10,7 +10,7 @@ interface CaseItem {
 
 const CASES: CaseItem[] = [
   {
-    customImg: 'images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.png',
+    customImg: 'images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.jpg',
     industry: '물류 / 배송',
     title: 'DK Express 홈페이지',
     point: '서비스 안내 + 상담 전환 최적화',
