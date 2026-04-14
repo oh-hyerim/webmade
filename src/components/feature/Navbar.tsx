@@ -65,9 +65,9 @@ export default function Navbar() {
         {/* CTA Button */}
         <Link
           to="/contact"
-          className="hidden md:flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] text-sm font-semibold px-5 py-2.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors"
+          className="hidden md:inline-flex items-center gap-2 bg-[#1E5EFF] text-white font-semibold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors"
         >
-          <i className="ri-kakao-talk-fill text-base"></i>
+          <i className="ri-mail-send-line text-lg"></i>
           문의하기
         </Link>
 
@@ -99,9 +99,9 @@ export default function Navbar() {
           ))}
           <Link
             to="/contact"
-            className="flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] text-sm font-semibold px-5 py-3 rounded-full whitespace-nowrap cursor-pointer"
+            className="inline-flex items-center gap-2 bg-[#1E5EFF] text-white font-semibold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors"
           >
-            <i className="ri-kakao-talk-fill text-base"></i>
+            <i className="ri-mail-send-line text-lg"></i>
             문의하기
           </Link>
         </div>
