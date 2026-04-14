@@ -1,14 +1,19 @@
 import { useLocation } from "react-router-dom";
 import Seo from '@/components/feature/Seo';
+import { SEO_PAGES, SITE_URL } from '@/config/seo';
 
 export default function NotFound() {
   const location = useLocation();
+  const seo = SEO_PAGES['*'];
   
   return (
     <div className="relative flex flex-col items-center justify-center h-screen text-center px-4">
       <Seo
-        title="페이지를 찾을 수 없습니다 | 웹메이드"
-        description="요청하신 페이지를 찾을 수 없습니다."
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        canonical={`${SITE_URL}${location.pathname}`}
         noindex={true}
       />
       <h1 className="absolute bottom-0 text-9xl md:text-[12rem] font-black text-gray-50 select-none pointer-events-none z-0">

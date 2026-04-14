@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 import AdminLayout from './components/AdminLayout';
 import StatsSection from './components/StatsSection';
 import ContactsTab from './components/ContactsTab';
 import RequestsTab from './components/RequestsTab';
 
 export default function AdminPage() {
+  const seo = SEO_PAGES['/admin'];
   const [activeTab, setActiveTab] = useState<'contacts' | 'requests'>('contacts');
   const [stats, setStats] = useState({ contactTotal: 0, contactUnread: 0, requestTotal: 0, requestUnread: 0 });
   const [showBanner, setShowBanner] = useState(false);
@@ -33,6 +36,14 @@ export default function AdminPage() {
 
   return (
     <AdminLayout unreadCount={totalUnread}>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/admin"
+        noindex={true}
+      />
       {showBanner && totalUnread > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-5 flex items-center justify-between">
           <div className="flex items-center gap-2">

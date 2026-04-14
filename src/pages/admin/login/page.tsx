@@ -2,8 +2,11 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 
 export default function AdminLoginPage() {
+  const seo = SEO_PAGES['/admin/login'];
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,6 +33,14 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center px-5">
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/admin/login"
+        noindex={true}
+      />
       <div className="bg-white rounded-2xl border border-[#E2E8F0] p-8 w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="w-12 h-12 flex items-center justify-center bg-[#0F172A] rounded-xl mx-auto mb-4">

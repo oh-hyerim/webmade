@@ -2,8 +2,10 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { supabase } from '@/lib/supabase';
 import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 
 export default function ContactPage() {
+  const seo = SEO_PAGES['/contact'];
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +42,11 @@ export default function ContactPage() {
   return (
     <main className="pt-20 min-h-screen bg-white">
       <Seo
-        title="홈페이지 제작 문의 | 웹메이드 상담 신청"
-        description="홈페이지 제작 비용과 상담이 궁금하신가요? 웹메이드에서 빠르고 전문적인 상담을 받아보세요. 카카오톡 문의 가능."
-        ogTitle="문의하기"
-        ogDescription="홈페이지 제작 상담 바로가기"
-        canonical="https://webmade.co.kr/contact"
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/contact"
       />
       {/* Hero */}
       <section className="bg-[#F8FAFC] py-16 md:py-24">

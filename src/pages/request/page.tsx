@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { supabase } from '@/lib/supabase';
 import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 
 /* ─────────────────────────────────────────────
    MultiSelect 컴포넌트
@@ -161,6 +162,7 @@ const MOOD_OPTIONS = [
    메인 페이지
 ───────────────────────────────────────────── */
 export default function RequestPage() {
+  const seo = SEO_PAGES['/request'];
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [messageLen, setMessageLen] = useState(0);
@@ -273,11 +275,11 @@ export default function RequestPage() {
   return (
     <main className="min-h-screen bg-[#F8FAFC] py-14 md:py-20 px-5">
       <Seo
-        title="홈페이지 제작 요청서 | 맞춤 견적 신청 - 웹메이드"
-        description="웹메이드 홈페이지 제작 요청서를 작성하세요. 업종, 목적, 디자인 방향을 알려주시면 맞춤 견적과 상담을 도와드립니다."
-        ogTitle="홈페이지 제작 요청서"
-        ogDescription="맞춤 견적 신청하기"
-        canonical="https://webmade.co.kr/request"
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/request"
       />
       <div className="max-w-2xl mx-auto">
         {/* Header */}

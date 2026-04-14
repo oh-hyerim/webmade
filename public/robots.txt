@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://webmade.co.kr/sitemap.xml
+Sitemap: https://webmadeworks.com/sitemap.xml

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 
 interface CaseItem {
   img?: string;
@@ -14,7 +15,7 @@ interface CaseItem {
 
 const CASES: CaseItem[] = [
   {
-    customImg: '/images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.jpg',
+    customImg: '/images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6S.jpg',
     industry: '물류 / 배송',
     title: 'DK Express 홈페이지',
     point: '서비스 안내 + 상담 전환 최적화',
@@ -54,14 +55,15 @@ const CASES: CaseItem[] = [
 
 
 export default function CasesPage() {
+  const seo = SEO_PAGES['/cases'];
   return (
     <main className="pt-20 min-h-screen bg-white">
       <Seo
-        title="홈페이지 제작 후기 | 실제 고객 성공 사례 - 웹메이드"
-        description="웹메이드 홈페이지 제작 후기와 성공 사례를 확인하세요. 실제 사업자들의 만족도 높은 사이트 제작 결과를 제공합니다."
-        ogTitle="제작 사례"
-        ogDescription="고객 성공 사례 확인"
-        canonical="https://webmade.co.kr/cases"
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/cases"
       />
       {/* Hero */}
       <section className="bg-[#F8FAFC] py-16 md:py-24">

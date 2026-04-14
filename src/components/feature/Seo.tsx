@@ -1,7 +1,6 @@
 import { FC } from 'react';
+import { DEFAULT_OG_IMAGE, SITE_URL } from '@/config/seo';
 
-const SITE_URL = 'https://webmade.co.kr';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const SITE_NAME = '웹메이드';
 
 interface SeoProps {
@@ -12,6 +11,7 @@ interface SeoProps {
   ogImage?: string;
   ogType?: 'website' | 'article';
   canonical?: string;
+  path?: string;
   noindex?: boolean;
   twitterCard?: 'summary' | 'summary_large_image';
 }
@@ -24,12 +24,20 @@ const Seo: FC<SeoProps> = ({
   ogImage = DEFAULT_OG_IMAGE,
   ogType = 'website',
   canonical,
+  path,
   noindex = false,
   twitterCard = 'summary_large_image',
 }) => {
+  const toAbsoluteUrl = (value: string) => {
+    if (/^https?:\/\//i.test(value)) return value;
+    const normalized = value.startsWith('/') ? value : `/${value}`;
+    return `${SITE_URL}${normalized}`;
+  };
+
   const resolvedOgTitle = ogTitle ?? title;
   const resolvedOgDescription = ogDescription ?? description;
-  const resolvedCanonical = canonical ?? SITE_URL;
+  const resolvedCanonical = canonical ?? (path ? toAbsoluteUrl(path) : SITE_URL);
+  const resolvedOgImage = toAbsoluteUrl(ogImage);
 
   return (
     <>
@@ -47,14 +55,14 @@ const Seo: FC<SeoProps> = ({
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={resolvedOgTitle} />
       <meta property="og:description" content={resolvedOgDescription} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={resolvedOgImage} />
       <meta property="og:url" content={resolvedCanonical} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content={twitterCard} />
       <meta name="twitter:title" content={resolvedOgTitle} />
       <meta name="twitter:description" content={resolvedOgDescription} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={resolvedOgImage} />
     </>
   );
 };

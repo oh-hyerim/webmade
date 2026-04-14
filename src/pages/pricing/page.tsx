@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/feature/Seo';
+import { SEO_PAGES } from '@/config/seo';
 
 const plans = [
   {
@@ -99,14 +100,15 @@ const options = [
 ];
 
 export default function PricingPage() {
+  const seo = SEO_PAGES['/pricing'];
   return (
     <main className="min-h-screen bg-white pt-20 md:pt-24 pb-16 md:pb-20">
       <Seo
-        title="홈페이지 제작 요금 안내 | 베이직·스탠다드 플랜 - 웹메이드"
-        description="웹메이드 홈페이지 제작 요금을 확인하세요. 베이직 30만원부터 스탠다드 150만원까지, 사업자 맞춤 플랜과 추가 옵션을 안내합니다."
-        ogTitle="홈페이지 제작 요금 안내"
-        ogDescription="베이직·스탠다드 플랜 및 추가 옵션 확인"
-        canonical="https://webmade.co.kr/pricing"
+        title={seo.title}
+        description={seo.description}
+        ogTitle={seo.ogTitle}
+        ogDescription={seo.ogDescription}
+        path="/pricing"
       />
 
       {/* Header */}
