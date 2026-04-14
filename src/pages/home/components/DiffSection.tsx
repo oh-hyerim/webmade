@@ -43,10 +43,6 @@ export default function DiffSection() {
               웹메이드는<br />이렇게 다릅니다
             </h2>
           </div>
-          <p className="text-[#64748B] text-base leading-relaxed max-w-xs">
-            저가형 제작사처럼 보이지 않게,<br />
-            상담 퀄리티와 결과물 완성도를 우선합니다.
-          </p>
         </div>
 
         {/* Grid */}
