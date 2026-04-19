@@ -88,7 +88,6 @@ export default function ContactDetailModal({ contact, onClose, onUpdate }: Props
           {/* Info */}
           <div className="grid grid-cols-2 gap-3">
             <InfoRow label="이름" value={contact.name} />
-            <InfoRow label="업종" value={contact.industry} />
             <div className="col-span-2">
               <p className="text-[10px] text-[#94A3B8] mb-1">연락처</p>
               <div className="flex items-center gap-2">
@@ -105,7 +104,6 @@ export default function ContactDetailModal({ contact, onClose, onUpdate }: Props
               </div>
             </div>
             <InfoRow label="이메일" value={contact.email} />
-            <InfoRow label="유형" value={contact.type} />
             <InfoRow label="접수일" value={formatDate(contact.created_at)} />
           </div>
 

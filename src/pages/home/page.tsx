@@ -1,4 +1,6 @@
 import HeroSection from './components/HeroSection';
+import ValuePropositionSection from './components/ValuePropositionSection';
+import SocialProofSection from './components/SocialProofSection';
 import EmpathySection from './components/EmpathySection';
 import ServiceSection from './components/ServiceSection';
 import DiffSection from './components/DiffSection';
@@ -23,6 +25,8 @@ export default function HomePage() {
         path="/"
       />
       <HeroSection />
+      <ValuePropositionSection />
+      <SocialProofSection />
       <EmpathySection />
       <ServiceSection />
       <DiffSection />

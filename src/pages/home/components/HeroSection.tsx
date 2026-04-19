@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { KAKAO_CHANNEL_URL } from '@/config/site';
 
 export default function HeroSection() {
   return (
@@ -14,54 +15,53 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full pt-28 pb-20">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-14 lg:gap-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full pt-24 md:pt-28 pb-16 md:pb-20">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-10 lg:gap-24">
 
           {/* Left: Main Copy */}
           <div className="flex-1 max-w-2xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 bg-[#22C55E] rounded-full animate-pulse shrink-0"></span>
               <span className="text-white/90 text-xs font-medium">전국 비대면 상담 가능</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.2] mb-6">
-              보기만 좋은 사이트 말고,<br />
-              <span className="text-[#1E5EFF]">문의로 이어지는</span><br />
-              홈페이지를 만듭니다
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.2] mb-5">
+              예쁜 사이트를 넘어<br />
+              <span className="text-[#1E5EFF]">문의가 들어오는 홈페이지</span>를 만듭니다
             </h1>
 
             {/* Sub Copy */}
-            <p className="text-white/70 text-base md:text-lg leading-relaxed mb-4 max-w-lg">
-              웹메이드는 사업 운영 중인 사장님을 위한 홈페이지를 제작합니다.<br />
-              업종과 목적에 맞는 구조를 먼저 설계하고,<br />
-              깔끔하고 전문적인 디자인으로 완성합니다.
+            <p className="text-white/80 text-base md:text-lg leading-relaxed mb-5 max-w-lg font-medium">
+              업종과 목표에 맞춰 상담 전환이 잘 되는 구조를 설계합니다
             </p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2 mb-8">
               {['회사소개형', '서비스 안내형', '상담 유도형', '전국 상담 가능', '쇼핑몰 제외'].map((tag) => (
                 <span key={tag} className="text-white/60 text-xs border border-white/20 rounded-full px-3 py-1">{tag}</span>
               ))}
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+            {/* CTA Buttons — 대비 강화, 히어로 내 즉시 노출 */}
+            <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-white text-[#0F172A] font-semibold px-7 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/90 transition-colors text-sm md:text-base"
+                className="inline-flex items-center justify-center gap-2 bg-[#1E5EFF] text-white font-bold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors text-sm md:text-base shadow-lg shadow-[#1E5EFF]/40 ring-2 ring-white/20"
               >
-                <i className="ri-mail-send-line text-lg"></i>
-                문의하기
+                <i className="ri-calendar-check-line text-lg"></i>
+                무료 상담 받기
               </Link>
-              <Link
-                to="/cases"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold px-7 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/20 transition-colors text-sm md:text-base"
+              <a
+                href={KAKAO_CHANNEL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors text-sm md:text-base shadow-lg shadow-[#FEE500]/40 border-2 border-[#FEE500]"
               >
-                제작 내용 확인하기
-                <i className="ri-arrow-right-line"></i>
-              </Link>
+                <i className="ri-kakao-talk-fill text-lg"></i>
+                카카오톡 상담
+              </a>
             </div>
 
             {/* Price Nudge */}
@@ -71,7 +71,7 @@ export default function HeroSection() {
               </div>
               <div>
                 <p className="text-white font-semibold text-sm mb-0.5">가격이 궁금하신가요?</p>
-                <p className="text-white/60 text-xs leading-relaxed">필요한 범위를 먼저 확인한 뒤 맞춤으로 안내해드립니다.</p>
+                <p className="text-white/60 text-xs leading-relaxed">간단 상담 후 범위에 맞는 견적·일정을 안내해 드립니다.</p>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce">
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce">
         <span className="text-white/35 text-xs">스크롤</span>
         <i className="ri-arrow-down-line text-white/35 text-lg"></i>
       </div>

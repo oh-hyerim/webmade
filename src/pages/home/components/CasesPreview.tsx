@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 interface CaseItem {
   customImg: string;
-  industry: string;
   title: string;
   point: string;
   url: string;
@@ -10,22 +9,19 @@ interface CaseItem {
 
 const CASES: CaseItem[] = [
   {
-    customImg: 'images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.jpg',
-    industry: '물류 / 배송',
+    customImg: '/images/7644a05f-b1ca-44a5-bc1e-0ad3873b3e47_b7b968c0-beae-4879-b89d-25a999b951a6.jpg',
     title: 'DK Express 홈페이지',
     point: '서비스 안내 + 상담 전환 최적화',
     url: 'https://dkexpress.us',
   },
   {
     customImg: '/images/edited_95e9644b3e3e07ba8be394545b916746_4aaef9f9.jpg',
-    industry: '출판',
     title: 'The Venue Times',
     point: '출판 서비스 안내 + 출간 상담 최적화',
     url: 'https://thevenuetimes.readdy.co',
   },
   {
     customImg: '/images/edited_83c319ce3a638dbaf0f658d46172a195_52f88c2d.jpg',
-    industry: '반려동물',
     title: '기억할개',
     point: '제작 서비스 안내 + 주문 전환 최적화',
     url: 'https://rememberdog.readdy.co',
@@ -83,7 +79,6 @@ export default function CasesPreview() {
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[#1E5EFF] text-xs font-semibold bg-[#1E5EFF]/10 px-2.5 py-1 rounded-full">{c.industry}</span>
                   <span className="text-[#16a34a] text-xs font-semibold bg-[#16a34a]/10 px-2.5 py-1 rounded-full">실제 제작</span>
                 </div>
                 <h3 className="text-[#0F172A] font-bold text-base mt-3 mb-1">{c.title}</h3>

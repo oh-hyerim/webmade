@@ -27,7 +27,7 @@ export default function CtaBanner() {
             className="inline-flex items-center justify-center gap-2 bg-white text-[#0F172A] font-semibold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/90 transition-colors text-base"
           >
             <i className="ri-mail-send-line text-lg"></i>
-            문의하기
+            무료 상담 받기
           </Link>
           <Link
             to="/cases"

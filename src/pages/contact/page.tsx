@@ -1,33 +1,72 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import Seo from '@/components/feature/Seo';
+import PrivacyPolicyContent from '@/components/PrivacyPolicyContent';
 import { SEO_PAGES } from '@/config/seo';
+import { KAKAO_CHANNEL_URL } from '@/config/site';
 
 export default function ContactPage() {
   const seo = SEO_PAGES['/contact'];
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [privacyAgreed, setPrivacyAgreed] = useState(false);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
+  const [errors, setErrors] = useState<{
+    name?: string;
+    phone?: string;
+    email?: string;
+    message?: string;
+    privacy?: string;
+  }>({});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const textarea = form.querySelector('textarea');
-    if (textarea && textarea.value.length > 500) {
-      alert('내용은 500자 이내로 입력해주세요.');
+    const fd = new FormData(form);
+
+    if (fd.get('website')) {
+      setSubmitted(true);
       return;
     }
+
+    const name = ((fd.get('name') as string) || '').trim();
+    const phone = ((fd.get('phone') as string) || '').trim();
+    const email = ((fd.get('email') as string) || '').trim();
+    const message = ((fd.get('message') as string) || '').trim();
+
+    const nextErrors: typeof errors = {};
+    if (!name) nextErrors.name = '이름을 입력해주세요.';
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (!phone) nextErrors.phone = '전화번호를 입력해주세요.';
+    else if (phoneDigits.length < 9 || phoneDigits.length > 15) {
+      nextErrors.phone = '올바른 전화번호를 입력해주세요.';
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = '올바른 이메일 형식을 입력해주세요.';
+    }
+    if (!message) nextErrors.message = '문의 내용을 입력해주세요.';
+    if (message.length > 1500) nextErrors.message = '내용은 1,500자 이내로 입력해주세요.';
+    if (!privacyAgreed) nextErrors.privacy = '개인정보 처리방침에 동의해 주세요.';
+
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+    setErrors({});
     setLoading(true);
-    const fd = new FormData(form);
+
     const payload = {
-      name: fd.get('name') as string,
-      phone: fd.get('phone') as string,
-      email: (fd.get('email') as string) || null,
-      industry: fd.get('industry') as string,
-      type: (fd.get('type') as string) || null,
-      message: fd.get('message') as string,
+      name,
+      phone,
+      email: email || null,
+      industry: '',
+      type: null as string | null,
+      message,
       status: 'unread',
     };
+
     try {
       const { error } = await supabase.from('contacts').insert(payload);
       if (error) throw error;
@@ -48,153 +87,214 @@ export default function ContactPage() {
         ogDescription={seo.ogDescription}
         path="/contact"
       />
-      {/* Hero */}
       <section className="bg-[#F8FAFC] py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10 text-center">
           <span className="text-[#1E5EFF] text-xs font-semibold tracking-widest uppercase mb-3 block">Contact</span>
-          <h1 className="text-3xl md:text-5xl font-bold text-[#0F172A] leading-tight mb-4">상담 문의</h1>
+          <h1 className="text-3xl md:text-5xl font-bold text-[#0F172A] leading-tight mb-4">홈페이지 제작 상담</h1>
           <p className="text-[#64748B] text-base md:text-lg max-w-xl mx-auto">
-            아래 내용만 보내주시면 상담이 더 빠르게 진행됩니다.<br />
-            전국 어디서든 비대면으로 진행 가능합니다.
+            간단한 상담으로 방향부터 잡아드립니다. 부담 없이 문의주세요
           </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+            <a
+              href={KAKAO_CHANNEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-6 py-3.5 rounded-full text-sm hover:bg-[#f5dc00] transition-colors"
+            >
+              <i className="ri-kakao-talk-fill text-lg"></i>
+              카카오톡 상담
+            </a>
+          </div>
         </div>
       </section>
 
       <section className="py-16 md:py-20">
-        <div className="max-w-5xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Left Info */}
-          <div className="lg:col-span-2 flex flex-col gap-8">
-            <div>
-              <h2 className="text-xl font-bold text-[#0F172A] mb-4">이런 내용을 보내주세요</h2>
-              <ul className="flex flex-col gap-3">
-                {['업종 (예: 피부과, 인테리어, 학원 등)', '필요한 페이지 수 또는 구성', '참고하고 싶은 사이트 (있다면)', '원하는 분위기나 색상', '예산 범위 (대략적으로도 OK)'].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-[#64748B]">
-                    <i className="ri-check-line text-[#22C55E] mt-0.5 shrink-0"></i>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-[#F8FAFC] rounded-2xl p-6">
-              <p className="text-[#0F172A] font-semibold text-sm mb-3">카카오톡으로 빠르게 문의</p>
-              <p className="text-[#64748B] text-xs mb-4 leading-relaxed">폼 작성이 번거로우시면 카카오톡으로 편하게 연락주세요. 보통 당일 내 답변드립니다.</p>
+        <div className="max-w-2xl mx-auto px-6 md:px-10">
+          {submitted ? (
+            <div className="flex flex-col items-center justify-center gap-5 py-16 text-center border border-[#E2E8F0] rounded-2xl bg-[#F8FAFC] px-6">
+              <div className="w-16 h-16 flex items-center justify-center bg-[#22C55E]/10 rounded-full">
+                <i className="ri-check-line text-[#22C55E] text-3xl"></i>
+              </div>
+              <p className="text-[#0F172A] text-base font-semibold leading-relaxed max-w-md">
+                문의가 접수되었습니다. 빠른 시일 내 연락드리겠습니다.
+              </p>
+              <p className="text-[#64748B] text-sm leading-relaxed max-w-md">
+                급하신 경우 카카오톡으로 알려주시면 더 빠르게 도와드릴 수 있어요.
+              </p>
               <a
-                href="https://pf.kakao.com/_xcBxnxlX/friend"
+                href={KAKAO_CHANNEL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-semibold px-5 py-3 rounded-full text-sm whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors w-full justify-center"
+                className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-semibold px-6 py-3 rounded-full text-sm whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors"
               >
-                <i className="ri-kakao-talk-fill text-base"></i>
-                카카오톡으로 문의하기
+                <i className="ri-kakao-talk-fill"></i>
+                카카오톡 바로가기
               </a>
+              <Link to="/" className="text-[#1E5EFF] text-sm font-semibold hover:underline">
+                홈으로 돌아가기
+              </Link>
             </div>
-            <div className="flex flex-col gap-3">
-              {[
-                { icon: 'ri-time-line', label: '연락 가능 시간', value: '평일 15:00 - 18:00' },
-                { icon: 'ri-map-pin-line', label: '상담 방식', value: '전국 비대면 상담 가능' },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-3">
-                  <div className="w-9 h-9 flex items-center justify-center bg-[#1E5EFF]/10 rounded-xl shrink-0">
-                    <i className={`${item.icon} text-[#1E5EFF] text-sm`}></i>
-                  </div>
-                  <div>
-                    <p className="text-[#94A3B8] text-xs">{item.label}</p>
-                    <p className="text-[#0F172A] text-sm font-medium">{item.value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Form */}
-          <div className="lg:col-span-3">
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center h-full gap-5 py-20 text-center">
-                <div className="w-16 h-16 flex items-center justify-center bg-[#22C55E]/10 rounded-full">
-                  <i className="ri-check-line text-[#22C55E] text-3xl"></i>
-                </div>
-                <h3 className="text-xl font-bold text-[#0F172A]">문의가 접수되었습니다!</h3>
-                <p className="text-[#64748B] text-sm leading-relaxed">빠른 시일 내에 카카오톡 또는 이메일로 연락드리겠습니다.<br />급하신 경우 카카오톡으로 직접 문의해주세요.</p>
-                <a
-                  href="https://pf.kakao.com/_xcBxnxlX/friend"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-semibold px-6 py-3 rounded-full text-sm whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors"
-                >
-                  <i className="ri-kakao-talk-fill"></i>
-                  카카오톡 바로가기
-                </a>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="website-fake">웹사이트</label>
+                <input type="text" id="website-fake" name="website" tabIndex={-1} autoComplete="off" />
               </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-5"
+
+              <div>
+                <label htmlFor="contact-name" className="text-[#0F172A] text-sm font-medium mb-1.5 block">
+                  이름 <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="홍길동"
+                  className="w-full border border-[#E2E8F0] rounded-xl px-4 py-4 text-base text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] focus:ring-2 focus:ring-[#1E5EFF]/20 bg-[#F8FAFC]"
+                  aria-invalid={!!errors.name}
+                />
+                {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="contact-phone" className="text-[#0F172A] text-sm font-medium mb-1.5 block">
+                  전화번호 <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="010-1234-5678"
+                  className="w-full border border-[#E2E8F0] rounded-xl px-4 py-4 text-base text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] focus:ring-2 focus:ring-[#1E5EFF]/20 bg-[#F8FAFC]"
+                  aria-invalid={!!errors.phone}
+                />
+                {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="contact-email" className="text-[#0F172A] text-sm font-medium mb-1.5 block">
+                  이메일
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="선택 입력 (name@example.com)"
+                  className="w-full border border-[#E2E8F0] rounded-xl px-4 py-4 text-base text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] focus:ring-2 focus:ring-[#1E5EFF]/20 bg-[#F8FAFC]"
+                  aria-invalid={!!errors.email}
+                />
+                {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="contact-message" className="text-[#0F172A] text-sm font-medium mb-1.5 block">
+                  문의 내용 <span className="text-red-400">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  maxLength={1500}
+                  rows={6}
+                  placeholder="업종, 원하시는 일정, 참고 사이트 등을 자유롭게 적어주세요."
+                  className="w-full border border-[#E2E8F0] rounded-xl px-4 py-4 text-base text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] focus:ring-2 focus:ring-[#1E5EFF]/20 bg-[#F8FAFC] resize-none"
+                  aria-invalid={!!errors.message}
+                />
+                {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
+              </div>
+
+              <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-4">
+                <div className="flex items-start gap-3">
+                  <input
+                    id="contact-privacy"
+                    type="checkbox"
+                    checked={privacyAgreed}
+                    onChange={(e) => setPrivacyAgreed(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded border-[#CBD5E1] text-[#1E5EFF] focus:ring-[#1E5EFF]/20 shrink-0"
+                    aria-describedby="privacy-hint"
+                  />
+                  <div id="privacy-hint" className="text-sm text-[#334155] leading-relaxed">
+                    <button
+                      type="button"
+                      onClick={() => setPrivacyModalOpen(true)}
+                      className="text-[#1E5EFF] font-medium underline underline-offset-2"
+                    >
+                      개인정보 처리방침
+                    </button>
+                    에 동의합니다 <span className="text-red-400">*</span>
+                  </div>
+                </div>
+                {errors.privacy && <p className="text-xs text-red-500 mt-2">{errors.privacy}</p>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#1E5EFF] text-white font-bold py-5 rounded-xl whitespace-nowrap cursor-pointer hover:bg-[#1a4fd8] transition-colors disabled:opacity-60 text-base shadow-lg shadow-[#1E5EFF]/35 ring-2 ring-[#1E5EFF]/20"
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">이름 <span className="text-red-400">*</span></label>
-                    <input name="name" required type="text" placeholder="홍길동" className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC]" />
-                  </div>
-                  <div>
-                    <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">연락처 <span className="text-red-400">*</span></label>
-                    <input name="phone" required type="tel" placeholder="010-0000-0000" className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC]" />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">이메일</label>
-                  <input name="email" type="email" placeholder="example@email.com" className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC]" />
-                </div>
-                <div>
-                  <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">업종 <span className="text-red-400">*</span></label>
-                  <input name="industry" required type="text" placeholder="예: 피부과, 인테리어, 학원, 컨설팅 등" className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC]" />
-                </div>
-                <div>
-                  <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">홈페이지 유형</label>
-                  <select name="type" className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC] cursor-pointer">
-                    <option value="">선택해주세요</option>
-                    <option value="회사소개형">회사소개형</option>
-                    <option value="서비스안내형">서비스 안내형</option>
-                    <option value="상담유도형">상담 유도형</option>
-                    <option value="기타">기타 (상담 후 결정)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-[#0F172A] text-sm font-medium mb-1.5 block">문의 내용 <span className="text-red-400">*</span></label>
-                  <textarea
-                    name="message"
-                    required
-                    maxLength={500}
-                    rows={5}
-                    placeholder="필요한 페이지 구성, 참고 사이트, 원하는 분위기 등을 자유롭게 적어주세요. (최대 500자)"
-                    className="w-full border border-[#E2E8F0] rounded-xl px-4 py-3 text-sm text-[#0F172A] placeholder-[#CBD5E1] focus:outline-none focus:border-[#1E5EFF] bg-[#F8FAFC] resize-none"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#1E5EFF] text-white font-semibold py-4 rounded-xl whitespace-nowrap cursor-pointer hover:bg-[#1a4fd8] transition-colors disabled:opacity-60 text-sm"
-                >
-                  {loading ? '전송 중...' : '문의 보내기'}
-                </button>
-                <p className="text-[#94A3B8] text-xs text-center">
-                  급하신 경우{' '}
-                  <a href="https://pf.kakao.com/_xcBxnxlX/friend" target="_blank" rel="noopener noreferrer" className="text-[#ca9f00] font-medium">카카오톡</a>
-                  으로 바로 문의해주세요.
-                </p>
-                <div className="flex items-start gap-3 bg-[#FFF7ED] border border-[#FED7AA] rounded-xl px-4 py-4">
-                  <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5">
-                    <i className="ri-error-warning-line text-[#EA580C] text-base"></i>
-                  </div>
-                  <p className="text-[#9A3412] text-xs leading-relaxed">
-                    웹메이드는 <strong className="text-[#C2410C] font-semibold">소개형·안내형 홈페이지 제작</strong>에 집중합니다.<br />
-                    쇼핑몰 및 로그인 기능 개발은 진행하지 않습니다.
-                  </p>
-                </div>
-              </form>
-            )}
-          </div>
+                {loading ? '전송 중...' : '무료 상담 받기'}
+              </button>
+            </form>
+          )}
         </div>
       </section>
+
+      {privacyModalOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="privacy-modal-title"
+        >
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/40 cursor-default"
+            onClick={() => setPrivacyModalOpen(false)}
+            aria-label="닫기"
+          />
+          <div className="relative bg-white rounded-2xl border border-[#E2E8F0] w-full max-w-lg max-h-[85vh] overflow-hidden flex flex-col shadow-xl">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#E2E8F0] shrink-0">
+              <h2 id="privacy-modal-title" className="font-bold text-[#0F172A] text-base">
+                개인정보 처리방침
+              </h2>
+              <button
+                type="button"
+                onClick={() => setPrivacyModalOpen(false)}
+                className="w-8 h-8 flex items-center justify-center text-[#94A3B8] hover:text-[#0F172A]"
+                aria-label="모달 닫기"
+              >
+                <i className="ri-close-line text-xl"></i>
+              </button>
+            </div>
+            <div className="overflow-y-auto px-5 py-4 flex-1">
+              <PrivacyPolicyContent />
+            </div>
+            <div className="border-t border-[#E2E8F0] px-5 py-4 bg-[#F8FAFC] shrink-0">
+              <div className="flex items-start gap-3">
+                <input
+                  id="contact-privacy-modal"
+                  type="checkbox"
+                  checked={privacyAgreed}
+                  onChange={(e) => setPrivacyAgreed(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-[#CBD5E1] text-[#1E5EFF] focus:ring-[#1E5EFF]/20"
+                />
+                <label htmlFor="contact-privacy-modal" className="text-sm text-[#334155] leading-relaxed cursor-pointer">
+                  개인정보 처리방침에 동의합니다 <span className="text-red-400">*</span>
+                </label>
+              </div>
+              <button
+                type="button"
+                onClick={() => setPrivacyModalOpen(false)}
+                className="mt-4 w-full py-3 rounded-xl bg-[#0F172A] text-white text-sm font-semibold hover:bg-[#1e293b] transition-colors"
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

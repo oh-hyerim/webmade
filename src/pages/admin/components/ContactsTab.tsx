@@ -27,7 +27,6 @@ export default function ContactsTab() {
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
@@ -42,7 +41,6 @@ export default function ContactsTab() {
         .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
       if (statusFilter !== 'all') query = query.eq('status', statusFilter);
-      if (typeFilter !== 'all') query = query.eq('type', typeFilter);
       if (search) {
         query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%,message.ilike.%${search}%`);
       }
@@ -73,7 +71,7 @@ export default function ContactsTab() {
     } finally {
       setLoading(false);
     }
-  }, [page, statusFilter, typeFilter, search, selectedDates]);
+  }, [page, statusFilter, search, selectedDates]);
 
   useEffect(() => { fetchContacts(); }, [fetchContacts]);
 
@@ -104,9 +102,9 @@ export default function ContactsTab() {
   };
 
   const exportCSV = () => {
-    const headers = ['이름', '연락처', '이메일', '업종', '유형', '상태', '접수일', '문의내용'];
+    const headers = ['이름', '연락처', '이메일', '상태', '접수일', '문의내용'];
     const rows = contacts.map(c => [
-      c.name, c.phone ?? '', c.email ?? '', c.industry ?? '', c.type ?? '',
+      c.name, c.phone ?? '', c.email ?? '',
       c.status === 'unread' ? '미확인' : '확인됨',
       new Date(c.created_at).toLocaleDateString('ko-KR'),
       (c.message ?? '').replace(/\n/g, ' '),
@@ -147,17 +145,6 @@ export default function ContactsTab() {
           <option value="all">전체 상태</option>
           <option value="unread">미확인</option>
           <option value="read">확인됨</option>
-        </select>
-        <select
-          value={typeFilter}
-          onChange={(e) => { setTypeFilter(e.target.value); setPage(0); }}
-          className="border border-[#E2E8F0] rounded-xl px-3 py-2 text-sm text-[#334155] bg-[#F8FAFC] focus:outline-none cursor-pointer"
-        >
-          <option value="all">전체 유형</option>
-          <option value="회사소개형">회사소개형</option>
-          <option value="서비스안내형">서비스안내형</option>
-          <option value="상담유도형">상담유도형</option>
-          <option value="기타">기타</option>
         </select>
         <div className="relative">
           <button
@@ -241,7 +228,6 @@ export default function ContactsTab() {
                   <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap">이름</th>
                   <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap">연락처</th>
                   <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap hidden md:table-cell">이메일</th>
-                  <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap hidden lg:table-cell">유형</th>
                   <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap">상태</th>
                   <th className="px-4 py-3 text-left text-[10px] font-semibold text-[#94A3B8] uppercase whitespace-nowrap hidden lg:table-cell">접수일</th>
                 </tr>
@@ -268,7 +254,6 @@ export default function ContactsTab() {
                     </td>
                     <td className="px-4 py-3 text-sm text-[#334155] whitespace-nowrap">{c.phone ?? '-'}</td>
                     <td className="px-4 py-3 text-sm text-[#334155] hidden md:table-cell whitespace-nowrap">{c.email ?? '-'}</td>
-                    <td className="px-4 py-3 text-sm text-[#334155] hidden lg:table-cell whitespace-nowrap">{c.type ?? '-'}</td>
                     <td className="px-4 py-3">
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${c.status === 'unread' ? 'bg-red-100 text-red-500' : 'bg-[#F1F5F9] text-[#64748B]'}`}>
                         {c.status === 'unread' ? '미확인' : '확인됨'}

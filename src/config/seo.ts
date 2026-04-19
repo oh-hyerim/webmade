@@ -67,6 +67,20 @@ export const SEO_PAGES: Record<string, PageSeo> = {
       "웹메이드 홈페이지 제작 요청서를 작성하세요. 업종, 목적, 디자인 방향을 알려주시면 맞춤 견적과 상담을 도와드립니다.",
     ogTitle: "홈페이지 제작 요청서",
     ogDescription: "맞춤 견적 신청하기",
+    noindex: true,
+  },
+  "/privacy": {
+    title: "개인정보 처리방침 | 웹메이드",
+    description: "웹메이드 개인정보 처리방침입니다.",
+    ogTitle: "개인정보 처리방침",
+    ogDescription: "웹메이드 개인정보 처리방침",
+  },
+  "/contract-only": {
+    title: "접근 제한 | 웹메이드",
+    description: "계약 고객 전용 페이지입니다.",
+    ogTitle: "접근 제한",
+    ogDescription: "계약 고객 전용",
+    noindex: true,
   },
   "/admin": {
     title: "관리자 페이지 | 웹메이드",

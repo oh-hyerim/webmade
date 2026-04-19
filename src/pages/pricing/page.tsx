@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/feature/Seo';
 import { SEO_PAGES } from '@/config/seo';
+import { KAKAO_CHANNEL_URL } from '@/config/site';
 
 const plans = [
   {
@@ -17,7 +18,7 @@ const plans = [
       '문의폼 (구글 시트 저장)',
       '카카오톡 / 전화 연결',
     ],
-    cta: '베이직으로 시작하기',
+    cta: '무료 상담 후 진행하기',
     highlight: false,
   },
   {
@@ -37,7 +38,7 @@ const plans = [
       '문의 삭제 기능',
       'SEO 설정 (서비스)',
     ],
-    cta: '스탠다드로 시작하기',
+    cta: '무료 상담 후 진행하기',
     highlight: true,
   },
 ];
@@ -118,8 +119,7 @@ export default function PricingPage() {
           요금 안내
         </h1>
         <p className="text-[#64748B] text-sm md:text-base leading-relaxed max-w-xl mx-auto">
-          필요한 구성에 맞는 플랜을 선택하세요.<br />
-          추가로 옵션 선택이 있습니다.
+          상담 후 가장 적합한 플랜을 안내드립니다. 부담 없이 문의 먼저 주세요
         </p>
       </section>
 
@@ -156,7 +156,7 @@ export default function PricingPage() {
                         <span className="text-3xl md:text-4xl font-bold text-white">{plan.price}</span>
                       </div>
                       <p className="text-xs text-[#1E5EFF] font-medium mt-1.5">
-                        {plan.discountRate} 런칭 프로모션 · 선착순 3건
+                        {plan.discountRate} 런칭 프로모션
                       </p>
                     </div>
                   ) : (
@@ -165,6 +165,9 @@ export default function PricingPage() {
                     </div>
                   )}
                   <p className={`text-sm ${plan.highlight ? 'text-white/60' : 'text-[#64748B]'}`}>{plan.desc}</p>
+                  <p className={`text-xs mt-2 font-medium ${plan.highlight ? 'text-white/50' : 'text-[#94A3B8]'}`}>
+                    맞춤 견적과 일정 안내
+                  </p>
                 </div>
                 <div className={`border-t mb-5 md:mb-6 ${plan.highlight ? 'border-white/10' : 'border-[#E2E8F0]'}`} />
                 <ul className="flex flex-col gap-2.5 md:gap-3 mb-6 md:mb-8 flex-1">
@@ -190,13 +193,16 @@ export default function PricingPage() {
                   to="/contact"
                   className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm whitespace-nowrap cursor-pointer transition-colors ${
                     plan.highlight
-                      ? 'bg-[#1E5EFF] text-white hover:bg-[#1a4fd6]'
-                      : 'bg-[#F1F5F9] text-[#0F172A] hover:bg-[#E2E8F0]'
+                      ? 'bg-[#1E5EFF] text-white hover:bg-[#1a4fd6] shadow-md shadow-[#1E5EFF]/25'
+                      : 'bg-[#1E5EFF] text-white hover:bg-[#1a4fd6] shadow-md shadow-[#1E5EFF]/20'
                   }`}
                 >
-                  <i className="ri-arrow-right-line text-base"></i>
+                  <i className="ri-mail-send-line text-base"></i>
                   {plan.cta}
                 </Link>
+                <p className={`text-center text-xs mt-3 ${plan.highlight ? 'text-white/45' : 'text-[#94A3B8]'}`}>
+                  간단 상담 후 방향부터 안내드립니다
+                </p>
               </div>
             </div>
           ))}
@@ -239,6 +245,28 @@ export default function PricingPage() {
         </div>
       </section>
 
+      <section className="max-w-4xl mx-auto px-5 md:px-10 mb-14 md:mb-20">
+        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6 md:p-10">
+          <h2 className="text-lg md:text-2xl font-bold text-[#0F172A] mb-2">
+            문의가 잘 들어오는 홈페이지를 위해 필요한 추가 기능
+          </h2>
+          <p className="text-sm text-[#64748B] mb-6 leading-relaxed">
+            예약 요청, 후기 노출, SEO 보강 등은 업종과 운영 방식에 따라 달라집니다. 상담 시 우선순위를 함께 정리한 뒤 필요한 항목만 제안드립니다.
+          </p>
+          <ul className="flex flex-col gap-2 text-sm text-[#334155] mb-6">
+            <li className="flex items-start gap-2"><i className="ri-check-line text-[#1E5EFF] mt-0.5"></i>문의·상담 동선과 CTA 배치 점검</li>
+            <li className="flex items-start gap-2"><i className="ri-check-line text-[#1E5EFF] mt-0.5"></i>검색·SNS 공유를 고려한 메타·구조 정리</li>
+            <li className="flex items-start gap-2"><i className="ri-check-line text-[#1E5EFF] mt-0.5"></i>운영에 맞는 옵션만 선택 (불필요한 기능 최소화)</li>
+          </ul>
+          <Link
+            to="/contact"
+            className="inline-flex items-center justify-center gap-2 bg-[#1E5EFF] text-white font-semibold px-6 py-3 rounded-full text-sm hover:bg-[#1a4fd6] transition-colors"
+          >
+            상세 설명 받기 · 무료 상담
+          </Link>
+        </div>
+      </section>
+
       {/* CTA 버튼 영역 */}
       <section className="bg-[#F8FAFC] py-16 md:py-20 mt-4">
         <div className="max-w-2xl mx-auto px-5 md:px-10 text-center">
@@ -251,16 +279,16 @@ export default function PricingPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-[#1E5EFF] text-white font-semibold px-8 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-[#1E5EFF] text-white font-bold px-8 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors text-sm shadow-lg shadow-[#1E5EFF]/25"
             >
               <i className="ri-mail-send-line text-base"></i>
-              문의하기
+              무료 상담 받기
             </Link>
             <a
-              href="https://pf.kakao.com/_xcBxnxlX/friend"
+              href={KAKAO_CHANNEL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-semibold px-8 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-8 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#f5dc00] transition-colors text-sm"
             >
               <i className="ri-kakao-talk-fill text-base"></i>
               카카오톡 상담

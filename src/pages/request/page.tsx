@@ -280,6 +280,7 @@ export default function RequestPage() {
         ogTitle={seo.ogTitle}
         ogDescription={seo.ogDescription}
         path="/request"
+        noindex
       />
       <div className="max-w-2xl mx-auto">
         {/* Header */}

@@ -51,7 +51,7 @@ export default function ProcessSection() {
             className="inline-flex items-center gap-2 bg-[#1E5EFF] text-white font-semibold px-8 py-4 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#1a4fd6] transition-colors"
           >
             <i className="ri-mail-send-line text-lg"></i>
-            문의하기
+            무료 상담 받기
           </Link>
         </div>
       </div>

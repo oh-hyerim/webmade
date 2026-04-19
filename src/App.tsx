@@ -5,6 +5,7 @@ import i18n from "./i18n";
 import Navbar from "@/components/feature/Navbar";
 import Footer from "@/components/feature/Footer";
 import FloatingKakao from "@/components/feature/FloatingKakao";
+import Analytics from "@/components/Analytics";
 
 function Layout() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function Layout() {
 function App() {
   return (
     <I18nextProvider i18n={i18n}>
+      <Analytics />
       <BrowserRouter basename={__BASE_PATH__}>
         <Layout />
       </BrowserRouter>
