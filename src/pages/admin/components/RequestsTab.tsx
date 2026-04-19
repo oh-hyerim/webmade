@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
+import { sanitizeSearchInput } from '@/lib/sanitizeSearch';
 import RequestDetailModal from './RequestDetailModal';
 
 interface Request {
@@ -61,7 +62,10 @@ export default function RequestsTab() {
 
       if (statusFilter !== 'all') query = query.eq('status', statusFilter);
       if (search) {
-        query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%,company_name.ilike.%${search}%`);
+        const q = sanitizeSearchInput(search);
+        if (q) {
+          query = query.or(`name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`);
+        }
       }
       if (selectedDates.length === 1) {
         query = query

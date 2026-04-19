@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
+import { sanitizeSearchInput } from '@/lib/sanitizeSearch';
 import ContactDetailModal from './ContactDetailModal';
 
 interface Contact {
@@ -42,7 +43,10 @@ export default function ContactsTab() {
 
       if (statusFilter !== 'all') query = query.eq('status', statusFilter);
       if (search) {
-        query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%,message.ilike.%${search}%`);
+        const q = sanitizeSearchInput(search);
+        if (q) {
+          query = query.or(`name.ilike.%${q}%,phone.ilike.%${q}%,message.ilike.%${q}%`);
+        }
       }
       if (selectedDates.length === 1) {
         query = query

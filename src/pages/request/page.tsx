@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
+import * as Sentry from '@sentry/react';
 import { supabase } from '@/lib/supabase';
+import { validatePersonName, validatePhoneKr } from '@/lib/validation';
 import Seo from '@/components/feature/Seo';
 import { SEO_PAGES } from '@/config/seo';
 
@@ -177,7 +179,9 @@ export default function RequestPage() {
     if (!get('purpose')) errs.purpose = '홈페이지 목적을 선택해주세요.';
     if (!get('keywords')) errs.keywords = '검색 키워드를 입력해주세요.';
     if (!get('region')) errs.region = '주요 활동 지역을 입력해주세요.';
-    if (!get('name')) errs.name = '이름을 입력해주세요.';
+    const nameVal = get('name');
+    const nameErr = validatePersonName(nameVal);
+    if (nameErr) errs.name = nameErr;
 
     // 연락 방법: 3개 중 1개 이상
     const phone = get('phone');
@@ -185,6 +189,10 @@ export default function RequestPage() {
     const contactOther = get('contact_other');
     if (!phone && !kakao && !contactOther) {
       errs.contact = '전화번호, 카카오톡 링크, 기타 연락 방법 중 하나 이상 입력해주세요.';
+    }
+    if (phone) {
+      const pe = validatePhoneKr(phone);
+      if (pe) errs.phone = pe;
     }
 
     return errs;
@@ -240,7 +248,8 @@ export default function RequestPage() {
       const { error } = await supabase.from('requests').insert(payload);
       if (error) throw error;
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      Sentry.captureException(err);
       alert('전송 중 오류가 발생했습니다. 카카오톡으로 문의해주세요.');
     } finally {
       setLoading(false);

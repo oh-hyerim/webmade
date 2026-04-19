@@ -7,7 +7,7 @@ import RequestRoute from '@/pages/request/RequestRoute';
 import ContractOnlyPage from '@/pages/contract-only/page';
 import AdminPage from '@/pages/admin/page';
 import AdminLoginPage from '@/pages/admin/login/page';
-import ProtectedRoute from '@/pages/admin/components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import NotFound from '@/pages/NotFound';
 import PrivacyPage from '@/pages/privacy/page';
 

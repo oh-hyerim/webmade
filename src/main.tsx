@@ -3,9 +3,15 @@ import './i18n'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { initSentry } from '@/lib/sentry'
+import AppErrorBoundary from '@/components/AppErrorBoundary'
+
+initSentry()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <AppErrorBoundary>
+      <App />
+    </AppErrorBoundary>
   </StrictMode>,
 )

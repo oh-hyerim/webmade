@@ -5,7 +5,9 @@ import { supabase } from '@/lib/supabase';
 import Seo from '@/components/feature/Seo';
 import PrivacyPolicyContent from '@/components/PrivacyPolicyContent';
 import { SEO_PAGES } from '@/config/seo';
+import * as Sentry from '@sentry/react';
 import { KAKAO_CHANNEL_URL } from '@/config/site';
+import { validatePersonName, validatePhoneKr, validateMessage } from '@/lib/validation';
 
 export default function ContactPage() {
   const seo = SEO_PAGES['/contact'];
@@ -37,17 +39,15 @@ export default function ContactPage() {
     const message = ((fd.get('message') as string) || '').trim();
 
     const nextErrors: typeof errors = {};
-    if (!name) nextErrors.name = '이름을 입력해주세요.';
-    const phoneDigits = phone.replace(/\D/g, '');
-    if (!phone) nextErrors.phone = '전화번호를 입력해주세요.';
-    else if (phoneDigits.length < 9 || phoneDigits.length > 15) {
-      nextErrors.phone = '올바른 전화번호를 입력해주세요.';
-    }
+    const nameErr = validatePersonName(name);
+    if (nameErr) nextErrors.name = nameErr;
+    const phoneErr = validatePhoneKr(phone);
+    if (phoneErr) nextErrors.phone = phoneErr;
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       nextErrors.email = '올바른 이메일 형식을 입력해주세요.';
     }
-    if (!message) nextErrors.message = '문의 내용을 입력해주세요.';
-    if (message.length > 1500) nextErrors.message = '내용은 1,500자 이내로 입력해주세요.';
+    const msgErr = validateMessage(message);
+    if (msgErr) nextErrors.message = msgErr;
     if (!privacyAgreed) nextErrors.privacy = '개인정보 처리방침에 동의해 주세요.';
 
     if (Object.keys(nextErrors).length > 0) {
@@ -71,7 +71,8 @@ export default function ContactPage() {
       const { error } = await supabase.from('contacts').insert(payload);
       if (error) throw error;
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      Sentry.captureException(err);
       alert('전송 중 오류가 발생했습니다. 카카오톡으로 문의해주세요.');
     } finally {
       setLoading(false);

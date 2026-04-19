@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { isAdminUser } from '@/lib/auth';
 import Seo from '@/components/feature/Seo';
 import { SEO_PAGES } from '@/config/seo';
 
@@ -18,10 +19,14 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
       if (authError) {
         setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+      } else if (!data.user || !isAdminUser(data.user)) {
+        await supabase.auth.signOut();
+        setError('관리자 권한이 없습니다.');
       } else {
+        await supabase.auth.refreshSession();
         navigate('/admin');
       }
     } catch {
