@@ -70,6 +70,10 @@ export default function ServicesSection() {
               <img
                 src="https://readdy.ai/api/search-image?query=minimal%20dark%20website%20design%20on%20laptop%20screen%20showing%20clean%20contact%20form%20and%20navigation%2C%20monochrome%20black%20and%20white%20editorial%20aesthetic%2C%20sophisticated%20layout%2C%20premium%20dark%20UI%2C%20soft%20studio%20lighting%2C%20no%20text%20visible%2C%20abstract%20web%20design%20concept&width=900&height=600&seq=svc-featured-v2&orientation=landscape"
                 alt="문의 전환형 홈페이지"
+                loading="lazy"
+                decoding="async"
+                width={900}
+                height={600}
                 className="w-full h-52 md:h-64 object-cover object-top opacity-55"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { hasAdminEmailConfig, isAdminEmail } from '@/lib/adminAuth';
 import { supabase } from '@/lib/supabase';
 
 interface Props {
@@ -15,7 +16,7 @@ export default function ProtectedRoute({ children }: Props) {
     supabase.auth.getSession()
       .then(({ data: { session } }) => {
         if (!mounted) return;
-        setAuthed(!!session);
+        setAuthed(!!session && hasAdminEmailConfig() && isAdminEmail(session.user.email));
         setChecking(false);
       })
       .catch(() => {

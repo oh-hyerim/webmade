@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { hasAdminEmailConfig, isAdminEmail } from '@/lib/adminAuth';
 import { supabase } from '@/lib/supabase';
 
 export default function AdminLogin() {
@@ -13,9 +14,12 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
     if (authError) {
       setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+    } else if (!hasAdminEmailConfig() || !isAdminEmail(data.user?.email)) {
+      await supabase.auth.signOut();
+      setError('관리자 접근 권한이 없는 계정입니다.');
     } else {
       navigate('/admin');
     }

@@ -106,7 +106,15 @@ export default function PortfolioSection() {
             {/* Mobile */}
             <div className="md:hidden">
               <div className="relative w-full h-[240px] overflow-hidden">
-                <img src={featured.img} alt={featured.title} className="w-full h-full object-cover object-center" />
+                <img
+                  src={featured.img}
+                  alt={featured.title}
+                  loading="lazy"
+                  decoding="async"
+                  width={1400}
+                  height={800}
+                  className="w-full h-full object-cover object-center"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/80 to-transparent" />
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className="text-[9px] tracking-[0.25em] text-white/60 uppercase bg-black/50 border border-white/15 px-3 py-1.5 font-light">{featured.label}</span>
@@ -129,6 +137,10 @@ export default function PortfolioSection() {
               <img
                 src={featured.img}
                 alt={featured.title}
+                loading="lazy"
+                decoding="async"
+                width={1400}
+                height={800}
                 className="w-full h-full object-cover object-top group-hover:scale-[1.015] transition-transform duration-1200"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-[#0d0d0d]/20 to-transparent" />
@@ -165,7 +177,15 @@ export default function PortfolioSection() {
             <div className="reveal-item opacity-0 translate-y-6 transition-all duration-700 md:col-span-7 group cursor-default">
               <div className="md:hidden">
                 <div className="relative w-full h-[180px] overflow-hidden">
-                  <img src={secondary[0].img} alt={secondary[0].title} className="w-full h-full object-cover object-center" />
+                  <img
+                    src={secondary[0].img}
+                    alt={secondary[0].title}
+                    loading="lazy"
+                    decoding="async"
+                    width={900}
+                    height={600}
+                    className="w-full h-full object-cover object-center"
+                  />
                   <div className="absolute top-4 left-4 flex items-center gap-2">
                     <span className="text-[9px] tracking-[0.2em] text-white/55 uppercase bg-black/40 border border-white/12 px-2.5 py-1 font-light">{secondary[0].label}</span>
                   </div>
@@ -182,7 +202,15 @@ export default function PortfolioSection() {
               </div>
 
               <div className="hidden md:block relative overflow-hidden" style={{ height: 'clamp(240px, 32vw, 420px)' }}>
-                <img src={secondary[0].img} alt={secondary[0].title} className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700" />
+                <img
+                  src={secondary[0].img}
+                  alt={secondary[0].title}
+                  loading="lazy"
+                  decoding="async"
+                  width={900}
+                  height={600}
+                  className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/90 via-[#0d0d0d]/15 to-transparent" />
                 <div className="absolute top-5 left-5 flex items-center gap-2">
                   <span className="text-[9px] tracking-[0.2em] text-white/55 uppercase bg-black/40 border border-white/12 px-2.5 py-1 font-light">{secondary[0].label}</span>
@@ -201,7 +229,15 @@ export default function PortfolioSection() {
             <div className="reveal-item opacity-0 translate-y-6 transition-all duration-700 md:col-span-5 group cursor-default" style={{ transitionDelay: '100ms' }}>
               <div className="md:hidden">
                 <div className="relative w-full h-[180px] overflow-hidden">
-                  <img src={secondary[1].img} alt={secondary[1].title} className="w-full h-full object-cover object-center" />
+                  <img
+                    src={secondary[1].img}
+                    alt={secondary[1].title}
+                    loading="lazy"
+                    decoding="async"
+                    width={700}
+                    height={480}
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
                 <div className="pt-4 pb-3 border-b border-white/[0.07]">
                   <div className="flex items-center gap-3 mb-2">
@@ -216,7 +252,15 @@ export default function PortfolioSection() {
 
               <div className="hidden md:block">
                 <div className="relative overflow-hidden" style={{ height: 'clamp(180px, 22vw, 300px)' }}>
-                  <img src={secondary[1].img} alt={secondary[1].title} className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700" />
+                  <img
+                    src={secondary[1].img}
+                    alt={secondary[1].title}
+                    loading="lazy"
+                    decoding="async"
+                    width={700}
+                    height={480}
+                    className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/80 via-transparent to-transparent" />
                   <div className="absolute top-4 left-4 flex items-center gap-2">
                     <span className="text-[9px] tracking-[0.2em] text-white/55 uppercase bg-black/40 border border-white/12 px-2.5 py-1 font-light">{secondary[1].label}</span>

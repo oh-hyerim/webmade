@@ -20,6 +20,9 @@ export default function HeroSection() {
         <img
           src="https://readdy.ai/api/search-image?query=ultra%20minimal%20dark%20studio%20workspace%20with%20soft%20directional%20light%2C%20monochrome%20charcoal%20and%20black%20tones%2C%20subtle%20grain%20texture%2C%20no%20objects%2C%20pure%20abstract%20dark%20editorial%20atmosphere%2C%20premium%20photography%2C%20very%20dark%20with%20faint%20warm%20light%20from%20one%20side%2C%20sophisticated%20and%20quiet&width=1440&height=900&seq=hero-editorial-bg-v3&orientation=landscape"
           alt=""
+          width={1440}
+          height={900}
+          decoding="async"
           className="w-full h-full object-cover object-center opacity-15"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-[#0a0a0a]/60" />

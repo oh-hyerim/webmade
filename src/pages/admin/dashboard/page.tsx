@@ -58,7 +58,9 @@ export default function AdminDashboard() {
       query = query.or(`name.ilike.%${filters.search}%,phone.ilike.%${filters.search}%,message.ilike.%${filters.search}%`);
     }
     if (filters.dates.length > 0) {
-      const orClauses = filters.dates.map(d => `created_at.gte.${d}T00:00:00,created_at.lte.${d}T23:59:59`).join(',');
+      const orClauses = filters.dates
+        .map(d => `and(created_at.gte.${d}T00:00:00,created_at.lte.${d}T23:59:59)`)
+        .join(',');
       query = query.or(orClauses);
     }
 
@@ -248,6 +250,13 @@ export default function AdminDashboard() {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate('/admin/project-requests')}
+              className="flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 py-1.5 border border-[#0a0a0a]/15 rounded-md text-xs text-[#0a0a0a]/60 hover:border-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-colors cursor-pointer whitespace-nowrap"
+            >
+              <i className="ri-file-list-3-line" />
+              <span className="hidden sm:inline">요청서</span>
+            </button>
             <button
               onClick={() => exportCSV(allContacts)}
               className="flex items-center gap-1 md:gap-1.5 px-2.5 md:px-3 py-1.5 border border-[#0a0a0a]/15 rounded-md text-xs text-[#0a0a0a]/60 hover:border-[#0a0a0a]/30 hover:text-[#0a0a0a] transition-colors cursor-pointer whitespace-nowrap"

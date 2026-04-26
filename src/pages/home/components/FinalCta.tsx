@@ -49,14 +49,6 @@ export default function FinalCta() {
         status: 'unread',
       });
 
-      // Also send to form endpoint
-      const formData = new URLSearchParams();
-      fd.forEach((value, key) => { formData.append(key, value as string); });
-      await fetch('https://readdy.ai/api/form/d7jjt9doidu8qm487r9g', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString(),
-      });
       setSubmitted(true);
     } catch {
       setSubmitted(true);
@@ -157,7 +149,6 @@ export default function FinalCta() {
 
                 <form
                   id="inquiry-form"
-                  data-readdy-form
                   onSubmit={handleSubmit}
                   className="space-y-10"
                 >
