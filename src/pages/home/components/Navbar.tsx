@@ -6,10 +6,10 @@ type NavbarProps = {
 };
 
 const navItems = [
-  { label: 'Services', to: '/Services' },
-  { label: 'Work', to: '/Work' },
-  { label: 'Process', to: '/Process' },
-  { label: 'Pricing', to: '/Pricing' },
+  { label: 'Services', to: '/services' },
+  { label: 'Work', to: '/work' },
+  { label: 'Process', to: '/process' },
+  { label: 'Pricing', to: '/pricing' },
 ];
 
 export default function Navbar({ forceSolid = false }: NavbarProps) {

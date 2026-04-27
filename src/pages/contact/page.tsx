@@ -136,7 +136,7 @@ export default function ContactPage() {
               24시간 이내로 답변드립니다.<br />더 빠른 상담은 카카오톡을 이용해 주세요.
             </p>
             <a
-              href="https://open.kakao.com/o/webmade"
+              href="http://pf.kakao.com/_xcBxnxlX"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#FEE500] text-[#111] font-medium text-xs tracking-wide cursor-pointer whitespace-nowrap"
@@ -175,7 +175,7 @@ export default function ContactPage() {
                   <span className="text-white/20 text-[9px] tracking-widest uppercase font-light w-16 flex-shrink-0">Phone</span>
                   <span className="text-white/60 text-sm font-light group-hover:text-white transition-colors">010-5130-1576</span>
                 </a>
-                <a href="https://open.kakao.com/o/webmade" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer">
+                <a href="http://pf.kakao.com/_xcBxnxlX" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer">
                   <span className="text-white/20 text-[9px] tracking-widest uppercase font-light w-16 flex-shrink-0">Kakao</span>
                   <span className="text-white/60 text-sm font-light group-hover:text-white transition-colors">빠른 상담 채널</span>
                 </a>
@@ -288,7 +288,7 @@ export default function ContactPage() {
                     )}
                   </button>
                   <a
-                    href="https://open.kakao.com/o/webmade"
+                    href="http://pf.kakao.com/_xcBxnxlX"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-shrink-0 py-4 px-7 border border-[#0a0a0a]/20 text-[#0a0a0a]/55 text-sm font-light hover:border-[#0a0a0a]/40 hover:text-[#0a0a0a]/80 transition-colors cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
@@ -333,10 +333,10 @@ export default function ContactPage() {
 
       {/* Mobile sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex">
-        <a href="tel:010-5130-1576" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#0a0a0a] text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
-          <i className="ri-phone-line text-base" />전화 상담
+        <a href="/contact" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#0a0a0a] text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
+          <i className="ri-question-answer-line text-base" />문의하기
         </a>
-        <a href="https://open.kakao.com/o/webmade" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
+        <a href="http://pf.kakao.com/_xcBxnxlX" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
           <i className="ri-kakao-talk-fill text-base" />카카오 상담
         </a>
       </div>

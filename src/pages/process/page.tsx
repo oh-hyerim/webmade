@@ -82,7 +82,10 @@ export default function ProcessPage() {
     window.scrollTo(0, 0);
     const el = heroRef.current;
     if (!el) return;
-    const timer = setTimeout(() => el.classList.add('opacity-100'), 80);
+    const timer = setTimeout(() => {
+      el.classList.remove('opacity-0');
+      el.classList.add('opacity-100');
+    }, 80);
     return () => clearTimeout(timer);
   }, []);
 
@@ -92,7 +95,11 @@ export default function ProcessPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.querySelectorAll('.reveal-item').forEach((el, i) => {
-              setTimeout(() => (el as HTMLElement).classList.add('opacity-100', 'translate-y-0'), i * 100);
+              setTimeout(() => {
+                const item = el as HTMLElement;
+                item.classList.remove('opacity-0', 'translate-y-4', 'translate-y-6', 'translate-y-8');
+                item.classList.add('opacity-100', 'translate-y-0');
+              }, i * 100);
             });
           }
         });
@@ -115,7 +122,8 @@ export default function ProcessPage() {
       {/* Hero */}
       <section
         ref={heroRef}
-        className="relative min-h-[55vh] bg-[#0a0a0a] flex flex-col justify-end opacity-0 transition-opacity duration-1000 overflow-hidden pt-[68px]"
+        className="relative min-h-[55vh] bg-black flex flex-col justify-end transition-opacity duration-1000 overflow-hidden pt-[68px]"
+        style={{ backgroundColor: '#0a0a0a' }}
       >
         <div className="absolute inset-0">
           <img
@@ -123,7 +131,7 @@ export default function ProcessPage() {
             alt=""
             className="w-full h-full object-cover object-center opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pb-20 md:pb-28 pt-24 md:pt-32 w-full">
@@ -143,7 +151,7 @@ export default function ProcessPage() {
       </section>
 
       {/* Process steps */}
-      <section ref={contentRef} className="bg-[#f5f4f0] py-20 md:py-32">
+      <section ref={contentRef} className="bg-stone-100 py-20 md:py-32">
         <div className="max-w-7xl mx-auto px-8 md:px-16">
 
           {/* Timeline */}
@@ -158,7 +166,7 @@ export default function ProcessPage() {
               {steps.map((step, i) => (
                 <div
                   key={step.num}
-                  className={`reveal-item opacity-0 translate-y-6 transition-all duration-700 relative border-t border-[#0a0a0a]/[0.07] ${i === 0 ? 'pb-14 md:pb-20 pt-0 border-t-0' : 'py-10 md:py-14'}`}
+                  className={`reveal-item translate-y-0 transition-all duration-700 relative border-t border-[#0a0a0a]/[0.07] ${i === 0 ? 'pb-14 md:pb-20 pt-0 border-t-0' : 'py-10 md:py-14'}`}
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
                   <div className="hidden lg:block absolute -left-[3.15rem] top-0 w-2 h-2 rounded-full bg-[#0a0a0a]/25 mt-1" />
@@ -201,7 +209,7 @@ export default function ProcessPage() {
           </div>
 
           {/* FAQ */}
-          <div className="reveal-item opacity-0 translate-y-4 transition-all duration-700 pt-12 border-t border-[#0a0a0a]/10">
+          <div className="reveal-item translate-y-0 transition-all duration-700 pt-12 border-t border-[#0a0a0a]/10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
               <div className="lg:col-span-3">
                 <p className="text-[#0a0a0a]/50 text-[10px] tracking-[0.25em] uppercase font-light">자주 받는 질문</p>
@@ -233,7 +241,7 @@ export default function ProcessPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-black py-20 md:py-28" style={{ backgroundColor: '#0a0a0a' }}>
         <div className="max-w-7xl mx-auto px-8 md:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -255,7 +263,7 @@ export default function ProcessPage() {
                 <i className="ri-arrow-right-line" />
               </Link>
               <a
-                href="https://open.kakao.com/o/webmade"
+                href="http://pf.kakao.com/_xcBxnxlX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whitespace-nowrap flex-shrink-0 flex items-center justify-center gap-2 px-8 py-4 bg-[#FEE500] text-[#111] text-sm font-medium cursor-pointer hover:bg-[#FEE500]/90 transition-colors"
@@ -269,7 +277,7 @@ export default function ProcessPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0a0a0a] border-t border-white/[0.05] py-10 md:py-14">
+      <footer className="bg-black border-t border-white/[0.05] py-10 md:py-14" style={{ backgroundColor: '#0a0a0a' }}>
         <div className="max-w-7xl mx-auto px-8 md:px-16">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div>
@@ -291,10 +299,10 @@ export default function ProcessPage() {
 
       {/* Mobile sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex">
-        <a href="tel:010-5130-1576" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#0a0a0a] text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
-          <i className="ri-phone-line text-base" />전화 상담
+        <a href="/contact" className="flex-1 flex items-center justify-center gap-2 py-5 bg-black text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
+          <i className="ri-question-answer-line text-base" />문의하기
         </a>
-        <a href="https://open.kakao.com/o/webmade" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
+        <a href="http://pf.kakao.com/_xcBxnxlX" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
           <i className="ri-kakao-talk-fill text-base" />카카오 상담
         </a>
       </div>

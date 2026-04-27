@@ -24,6 +24,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/Services",
+    caseSensitive: true,
     element: <Navigate to="/services" replace />,
   },
   {
@@ -32,6 +33,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/Work",
+    caseSensitive: true,
     element: <Navigate to="/work" replace />,
   },
   {
@@ -44,6 +46,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/Pricing",
+    caseSensitive: true,
     element: <Navigate to="/pricing" replace />,
   },
   {
@@ -52,6 +55,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/Process",
+    caseSensitive: true,
     element: <Navigate to="/process" replace />,
   },
   {

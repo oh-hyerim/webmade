@@ -31,7 +31,6 @@ const requiredPageOptions = [
   '가격 안내',
   '포트폴리오',
   '후기',
-  '블로그 / 공지사항',
   '문의하기',
   '예약 페이지',
   '오시는 길',
@@ -436,7 +435,8 @@ export default function ProjectRequestPage() {
       window.localStorage.setItem(PROJECT_REQUEST_LAST_SUBMIT_KEY, String(Date.now()));
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch {
+    } catch (submitError) {
+      console.error('Project request submit failed', submitError);
       setError('제출 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
     } finally {
       setLoading(false);

@@ -59,13 +59,19 @@ export type ProjectRequestUpdate = Partial<Pick<ProjectRequest, 'status' | 'admi
 
 export async function createProjectRequest(payload: ProjectRequestInsert) {
   const { status: _status, admin_memo: _adminMemo, ...publicPayload } = payload;
-  const { error } = await supabase.from(PROJECT_REQUESTS_TABLE).insert({
-    ...publicPayload,
-    status: '대기',
-    admin_memo: null,
-  });
+  const { error } = await supabase.from(PROJECT_REQUESTS_TABLE).insert(publicPayload);
 
-  if (error) throw error;
+  if (error) {
+    console.error('Project request insert failed', {
+      table: PROJECT_REQUESTS_TABLE,
+      code: error.code,
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      payloadKeys: Object.keys(publicPayload),
+    });
+    throw error;
+  }
 }
 
 export async function fetchProjectRequests(filters: ProjectRequestFilters) {

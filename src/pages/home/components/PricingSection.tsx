@@ -3,39 +3,39 @@ import { useEffect, useRef, useState } from 'react';
 const plans = [
   {
     num: '01',
-    name: '원페이지형',
+    name: '베이직',
     price: '79',
-    role: '가볍게 시작하는 1페이지 구성',
-    tag: '입문용',
-    highlights: ['1페이지 구성', '문의형 / 소개형', '광고 랜딩 연결'],
-    seo: false,
-    admin: false,
+    role: '운영 가능한 최소 완성형',
+    tag: '시작형',
+    highlights: ['메인 + 서브 3페이지', '문의폼 + 카카오톡 상담', '관리자 문의 확인 기능'],
+    for: '처음 홈페이지가 필요하거나, 합리적인 비용으로 기본 기능을 갖추고 싶은 분께 적합합니다.',
+    badges: ['빠른 오픈 가능', '처음 제작 추천', '운영 필수 기능 포함'],
     featured: false,
-    includes: ['메인 1페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '오픈 세팅'],
+    includes: ['메인 + 서브 3페이지', '문의폼 + 카카오톡 상담', '관리자 문의 확인 기능', '반응형 제작', '오픈 세팅'],
   },
   {
     num: '02',
-    name: '기본형',
+    name: '스탠다드',
     price: '149',
-    role: '가장 일반적인 홈페이지 구성',
+    role: '가장 많이 선택하는 실속형',
     tag: '가장 많이 선택하는 구성',
-    highlights: ['3~5페이지 구성', '회사소개 / 서비스 / 문의', '기본 SEO 포함'],
-    seo: true,
-    admin: false,
+    highlights: ['메인 + 서브 6페이지', '후기 / FAQ / 가격표 구성', 'SEO 강화 + 전환 구조 설계'],
+    for: '소상공인, 프리랜서, 전문직 등 실제 문의 전환이 중요한 분들이 가장 많이 선택합니다.',
+    badges: ['인기 상품', '문의 전환 강화', '가성비 추천'],
     featured: true,
-    includes: ['메인 + 서브 3~5페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '기본 SEO 설정', '오픈 세팅'],
+    includes: ['메인 + 서브 6페이지', '후기 / FAQ / 가격표 구성', 'SEO 강화 + 전환 구조 설계', '반응형 제작', '오픈 세팅'],
   },
   {
     num: '03',
-    name: '확장형',
+    name: '프로',
     price: '229',
-    role: '운영 기능까지 고려한 확장형 구성',
-    tag: '운영 / 확장형',
-    highlights: ['다수 페이지 구성', '관리자 기능 가능', '게시물 / 포트폴리오 운영'],
-    seo: true,
-    admin: true,
+    role: '브랜드 고급형 홈페이지',
+    tag: '프리미엄형',
+    highlights: ['메인 + 서브 10페이지', '프리미엄 맞춤 디자인', '우선 제작 + 유지보수 확대'],
+    for: '브랜드 이미지, 고급 고객층 타겟, 완성도 높은 사이트가 필요한 분께 적합합니다.',
+    badges: ['프리미엄 구성', '브랜드 강화', '확장형 사이트'],
     featured: false,
-    includes: ['메인 + 서브 다수 페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '기본 SEO 설정', '관리자 페이지 구성 가능', '게시물 / 포트폴리오 / 공지 관리', '오픈 세팅'],
+    includes: ['메인 + 서브 10페이지', '프리미엄 맞춤 디자인', '우선 제작 + 유지보수 확대', '반응형 제작', '오픈 세팅'],
   },
 ];
 
@@ -150,12 +150,12 @@ export default function PricingSection() {
                 </p>
 
                 {/* Price */}
-                <div className={`flex items-baseline gap-2 mb-9 pb-9 border-b ${plan.featured ? 'border-[#0a0a0a]/10' : 'border-[#0a0a0a]/[0.06]'}`}>
+                <div className={`flex items-baseline gap-2 mb-7 pb-7 border-b ${plan.featured ? 'border-[#0a0a0a]/10' : 'border-[#0a0a0a]/[0.06]'}`}>
                   <span className={`
                     font-serif leading-none tracking-tight
                     ${plan.featured
-                      ? 'text-[#0a0a0a] text-[clamp(3.2rem,5vw,4.6rem)]'
-                      : 'text-[#0a0a0a]/30 text-[clamp(2.4rem,3.5vw,3.2rem)]'
+                      ? 'text-[#0a0a0a] text-[clamp(3.4rem,5.3vw,4.8rem)]'
+                      : 'text-[#0a0a0a]/34 text-[clamp(2.7rem,3.9vw,3.5rem)]'
                     }
                   `}>
                     {plan.price}
@@ -164,6 +164,10 @@ export default function PricingSection() {
                     만원부터
                   </span>
                 </div>
+
+                <p className={`text-xs font-light leading-[1.75] mb-6 ${plan.featured ? 'text-[#0a0a0a]/55' : 'text-[#0a0a0a]/30'}`}>
+                  {plan.for}
+                </p>
 
                 {/* Highlights */}
                 <ul className="space-y-3 mb-8">
@@ -181,7 +185,7 @@ export default function PricingSection() {
 
                 {/* Feature badges */}
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {['반응형 제작', '문의 폼', ...(plan.seo ? ['기본 SEO'] : []), ...(plan.admin ? ['관리자 페이지'] : [])].map((badge, j) => (
+                  {plan.badges.map((badge, j) => (
                     <span
                       key={j}
                       className={`text-[11px] font-light rounded-full px-3 py-1.5 whitespace-nowrap border
@@ -258,13 +262,17 @@ export default function PricingSection() {
                   </div>
                   <div className="text-right flex-shrink-0 ml-4">
                     <div className="flex items-baseline gap-1">
-                      <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-4xl' : 'text-[#0a0a0a]/30 text-3xl'}`}>
+                      <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-[2.9rem]' : 'text-[#0a0a0a]/34 text-[2.35rem]'}`}>
                         {plan.price}
                       </span>
-                      <span className={`text-xs font-light ${plan.featured ? 'text-[#0a0a0a]/38' : 'text-[#0a0a0a]/22'}`}>만원~</span>
+                      <span className={`text-xs font-light ${plan.featured ? 'text-[#0a0a0a]/38' : 'text-[#0a0a0a]/22'}`}>만원부터</span>
                     </div>
                   </div>
                 </div>
+
+                <p className={`text-xs font-light leading-[1.7] mb-4 ${plan.featured ? 'text-[#0a0a0a]/55' : 'text-[#0a0a0a]/30'}`}>
+                  {plan.for}
+                </p>
 
                 <ul className="space-y-2.5 mb-5">
                   {plan.highlights.map((h, j) => (
@@ -276,7 +284,7 @@ export default function PricingSection() {
                 </ul>
 
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {['반응형 제작', '문의 폼', ...(plan.seo ? ['기본 SEO'] : []), ...(plan.admin ? ['관리자 페이지'] : [])].map((badge, j) => (
+                  {plan.badges.map((badge, j) => (
                     <span key={j} className={`text-[11px] font-light rounded-full px-3 py-1 whitespace-nowrap border ${plan.featured ? 'border-[#0a0a0a]/12 text-[#0a0a0a]/50' : 'border-[#0a0a0a]/[0.07] text-[#0a0a0a]/28'}`}>
                       {badge}
                     </span>

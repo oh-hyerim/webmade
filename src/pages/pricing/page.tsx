@@ -6,42 +6,39 @@ import SeoHead from '@/components/feature/SeoHead';
 const plans = [
   {
     num: '01',
-    name: '원페이지형',
+    name: '베이직',
     price: '79',
-    role: '가볍게 시작하는 1페이지 구성',
-    tag: '입문용',
-    highlights: ['1페이지 구성', '문의형 / 소개형', '광고 랜딩 연결'],
-    seo: false,
-    admin: false,
+    role: '운영 가능한 최소 완성형',
+    tag: '시작형',
+    highlights: ['메인 + 서브 3페이지', '문의폼 + 카카오톡 상담', '관리자 문의 확인 기능'],
+    badges: ['빠른 오픈 가능', '처음 제작 추천', '운영 필수 기능 포함'],
     featured: false,
-    includes: ['메인 1페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '오픈 세팅'],
-    for: '처음 홈페이지를 만들거나, 광고 랜딩 페이지가 필요한 분께 적합합니다.',
+    includes: ['메인 + 서브 3페이지', '문의폼 + 카카오톡 상담', '관리자 문의 확인 기능', '반응형 제작', '오픈 세팅'],
+    for: '처음 홈페이지가 필요하거나, 합리적인 비용으로 기본 기능을 갖추고 싶은 분께 적합합니다.',
   },
   {
     num: '02',
-    name: '기본형',
+    name: '스탠다드',
     price: '149',
-    role: '가장 일반적인 홈페이지 구성',
+    role: '가장 많이 선택하는 실속형',
     tag: '가장 많이 선택하는 구성',
-    highlights: ['3~5페이지 구성', '회사소개 / 서비스 / 문의', '기본 SEO 포함'],
-    seo: true,
-    admin: false,
+    highlights: ['메인 + 서브 6페이지', '후기 / FAQ / 가격표 구성', 'SEO 강화 + 전환 구조 설계'],
+    badges: ['인기 상품', '문의 전환 강화', '가성비 추천'],
     featured: true,
-    includes: ['메인 + 서브 3~5페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '기본 SEO 설정', '오픈 세팅'],
-    for: '소상공인, 프리랜서, 전문직 등 일반적인 홈페이지가 필요한 분께 가장 많이 선택됩니다.',
+    includes: ['메인 + 서브 6페이지', '후기 / FAQ / 가격표 구성', 'SEO 강화 + 전환 구조 설계', '반응형 제작', '오픈 세팅'],
+    for: '소상공인, 프리랜서, 전문직 등 실제 문의 전환이 중요한 분들이 가장 많이 선택합니다.',
   },
   {
     num: '03',
-    name: '확장형',
+    name: '프로',
     price: '229',
-    role: '운영 기능까지 고려한 확장형 구성',
-    tag: '운영 / 확장형',
-    highlights: ['다수 페이지 구성', '관리자 기능 가능', '게시물 / 포트폴리오 운영'],
-    seo: true,
-    admin: true,
+    role: '브랜드 고급형 홈페이지',
+    tag: '프리미엄형',
+    highlights: ['메인 + 서브 10페이지', '프리미엄 맞춤 디자인', '우선 제작 + 유지보수 확대'],
+    badges: ['프리미엄 구성', '브랜드 강화', '확장형 사이트'],
     featured: false,
-    includes: ['메인 + 서브 다수 페이지', '반응형 제작', '문의 폼 연결', '기본 문구 정리', '기본 SEO 설정', '관리자 페이지 구성 가능', '게시물 / 포트폴리오 / 공지 관리', '오픈 세팅'],
-    for: '게시물 관리, 포트폴리오 운영 등 지속적으로 콘텐츠를 업데이트해야 하는 분께 적합합니다.',
+    includes: ['메인 + 서브 10페이지', '프리미엄 맞춤 디자인', '우선 제작 + 유지보수 확대', '반응형 제작', '오픈 세팅'],
+    for: '브랜드 이미지, 고급 고객층 타겟, 완성도 높은 사이트가 필요한 분께 적합합니다.',
   },
 ];
 
@@ -66,7 +63,10 @@ export default function PricingPage() {
     window.scrollTo(0, 0);
     const el = heroRef.current;
     if (!el) return;
-    const timer = setTimeout(() => el.classList.add('opacity-100'), 80);
+    const timer = setTimeout(() => {
+      el.classList.remove('opacity-0');
+      el.classList.add('opacity-100');
+    }, 80);
     return () => clearTimeout(timer);
   }, []);
 
@@ -76,7 +76,11 @@ export default function PricingPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.querySelectorAll('.reveal-item').forEach((el, i) => {
-              setTimeout(() => (el as HTMLElement).classList.add('opacity-100', 'translate-y-0'), i * 100);
+              setTimeout(() => {
+                const item = el as HTMLElement;
+                item.classList.remove('opacity-0', 'translate-y-4', 'translate-y-6', 'translate-y-8');
+                item.classList.add('opacity-100', 'translate-y-0');
+              }, i * 100);
             });
           }
         });
@@ -99,7 +103,8 @@ export default function PricingPage() {
       {/* Hero */}
       <section
         ref={heroRef}
-        className="relative min-h-[55vh] bg-[#0a0a0a] flex flex-col justify-end opacity-0 transition-opacity duration-1000 overflow-hidden pt-[68px]"
+        className="relative min-h-[55vh] bg-black flex flex-col justify-end transition-opacity duration-1000 overflow-hidden pt-[68px]"
+        style={{ backgroundColor: '#0a0a0a' }}
       >
         <div className="absolute inset-0">
           <img
@@ -107,7 +112,7 @@ export default function PricingPage() {
             alt=""
             className="w-full h-full object-cover object-center opacity-15"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 pb-20 md:pb-28 pt-24 md:pt-32 w-full">
@@ -127,11 +132,11 @@ export default function PricingPage() {
       </section>
 
       {/* Pricing content */}
-      <section ref={contentRef} className="bg-[#f5f4f0] py-20 md:py-32">
+      <section ref={contentRef} className="bg-stone-100 py-20 md:py-32">
         <div className="max-w-7xl mx-auto px-8 md:px-16">
 
           {/* Plans — Desktop 3-col */}
-          <div className="reveal-item opacity-0 translate-y-6 transition-all duration-700 hidden lg:grid lg:grid-cols-3 gap-3 items-stretch mb-10">
+          <div className="reveal-item translate-y-0 transition-all duration-700 hidden lg:grid lg:grid-cols-3 gap-3 items-stretch mb-10">
             {plans.map((plan, i) => (
               <div
                 key={plan.num}
@@ -155,7 +160,7 @@ export default function PricingPage() {
                   <p className={`text-xs font-light leading-snug mb-8 ${plan.featured ? 'text-[#0a0a0a]/50' : 'text-[#0a0a0a]/28'}`}>{plan.role}</p>
 
                   <div className={`flex items-baseline gap-2 mb-6 pb-6 border-b ${plan.featured ? 'border-[#0a0a0a]/10' : 'border-[#0a0a0a]/[0.06]'}`}>
-                    <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-[clamp(3.2rem,5vw,4.6rem)]' : 'text-[#0a0a0a]/30 text-[clamp(2.4rem,3.5vw,3.2rem)]'}`}>{plan.price}</span>
+                    <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-[clamp(3.4rem,5.3vw,4.8rem)]' : 'text-[#0a0a0a]/34 text-[clamp(2.7rem,3.9vw,3.5rem)]'}`}>{plan.price}</span>
                     <span className={`text-sm font-light ${plan.featured ? 'text-[#0a0a0a]/40' : 'text-[#0a0a0a]/22'}`}>만원부터</span>
                   </div>
 
@@ -171,7 +176,7 @@ export default function PricingPage() {
                   </ul>
 
                   <div className="flex flex-wrap gap-2 mb-8">
-                    {['반응형 제작', '문의 폼', ...(plan.seo ? ['기본 SEO'] : []), ...(plan.admin ? ['관리자 페이지'] : [])].map((badge, j) => (
+                    {plan.badges.map((badge, j) => (
                       <span key={j} className={`text-[11px] font-light rounded-full px-3 py-1.5 whitespace-nowrap border ${plan.featured ? 'border-[#0a0a0a]/14 text-[#0a0a0a]/55' : 'border-[#0a0a0a]/[0.07] text-[#0a0a0a]/28'}`}>{badge}</span>
                     ))}
                   </div>
@@ -199,7 +204,7 @@ export default function PricingPage() {
                     to="/contact"
                     className={`whitespace-nowrap w-full flex items-center justify-center gap-2 py-3.5 text-xs font-medium tracking-wide transition-all cursor-pointer ${
                       plan.featured
-                        ? 'bg-[#0a0a0a] text-white hover:bg-[#0a0a0a]/85'
+                        ? 'bg-black text-white hover:bg-neutral-900'
                         : 'border border-[#0a0a0a]/15 text-[#0a0a0a]/45 hover:border-[#0a0a0a]/30 hover:text-[#0a0a0a]/65'
                     }`}
                   >
@@ -231,8 +236,8 @@ export default function PricingPage() {
                     </div>
                     <div className="text-right flex-shrink-0 ml-4">
                       <div className="flex items-baseline gap-1">
-                        <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-4xl' : 'text-[#0a0a0a]/30 text-3xl'}`}>{plan.price}</span>
-                        <span className={`text-xs font-light ${plan.featured ? 'text-[#0a0a0a]/38' : 'text-[#0a0a0a]/22'}`}>만원~</span>
+                        <span className={`font-serif leading-none tracking-tight ${plan.featured ? 'text-[#0a0a0a] text-[2.9rem]' : 'text-[#0a0a0a]/34 text-[2.35rem]'}`}>{plan.price}</span>
+                        <span className={`text-xs font-light ${plan.featured ? 'text-[#0a0a0a]/38' : 'text-[#0a0a0a]/22'}`}>만원부터</span>
                       </div>
                     </div>
                   </div>
@@ -249,7 +254,7 @@ export default function PricingPage() {
                   </ul>
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {['반응형 제작', '문의 폼', ...(plan.seo ? ['기본 SEO'] : []), ...(plan.admin ? ['관리자 페이지'] : [])].map((badge, j) => (
+                    {plan.badges.map((badge, j) => (
                       <span key={j} className={`text-[11px] font-light rounded-full px-3 py-1 whitespace-nowrap border ${plan.featured ? 'border-[#0a0a0a]/12 text-[#0a0a0a]/50' : 'border-[#0a0a0a]/[0.07] text-[#0a0a0a]/28'}`}>{badge}</span>
                     ))}
                   </div>
@@ -276,7 +281,7 @@ export default function PricingPage() {
                     to="/contact"
                     className={`whitespace-nowrap w-full flex items-center justify-center gap-2 py-3.5 text-xs font-medium tracking-wide transition-all cursor-pointer ${
                       plan.featured
-                        ? 'bg-[#0a0a0a] text-white hover:bg-[#0a0a0a]/85'
+                        ? 'bg-black text-white hover:bg-neutral-900'
                         : 'border border-[#0a0a0a]/15 text-[#0a0a0a]/45 hover:border-[#0a0a0a]/30 hover:text-[#0a0a0a]/65'
                     }`}
                   >
@@ -289,7 +294,7 @@ export default function PricingPage() {
           </div>
 
           {/* Not included */}
-          <div className="reveal-item opacity-0 translate-y-4 transition-all duration-700 mb-16 md:mb-20">
+          <div className="reveal-item translate-y-0 transition-all duration-700 mb-16 md:mb-20">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
               <span className="text-[#0a0a0a]/25 text-[10px] tracking-[0.2em] uppercase font-light mr-2 whitespace-nowrap">진행하지 않는 작업</span>
               {notIncluded.map((item, i) => (
@@ -302,7 +307,7 @@ export default function PricingPage() {
           </div>
 
           {/* Add-ons */}
-          <div className="reveal-item opacity-0 translate-y-6 transition-all duration-700 border-t border-[#0a0a0a]/10 pt-12 md:pt-14">
+          <div className="reveal-item translate-y-0 transition-all duration-700 border-t border-[#0a0a0a]/10 pt-12 md:pt-14">
             <div className="flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-20">
               <div className="flex-shrink-0 lg:w-64">
                 <span className="text-[10px] tracking-[0.25em] text-[#0a0a0a]/35 uppercase font-light block mb-4">추가 옵션</span>
@@ -337,7 +342,7 @@ export default function PricingPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#0a0a0a] py-20 md:py-28">
+      <section className="bg-black py-20 md:py-28" style={{ backgroundColor: '#0a0a0a' }}>
         <div className="max-w-7xl mx-auto px-8 md:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -360,7 +365,7 @@ export default function PricingPage() {
                 <i className="ri-arrow-right-line" />
               </Link>
               <a
-                href="https://open.kakao.com/o/webmade"
+                href="http://pf.kakao.com/_xcBxnxlX"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="whitespace-nowrap flex-shrink-0 flex items-center justify-center gap-2 px-8 py-4 bg-[#FEE500] text-[#111] text-sm font-medium cursor-pointer hover:bg-[#FEE500]/90 transition-colors"
@@ -374,7 +379,7 @@ export default function PricingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0a0a0a] border-t border-white/[0.05] py-10 md:py-14">
+      <footer className="bg-black border-t border-white/[0.05] py-10 md:py-14" style={{ backgroundColor: '#0a0a0a' }}>
         <div className="max-w-7xl mx-auto px-8 md:px-16">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div>
@@ -396,10 +401,10 @@ export default function PricingPage() {
 
       {/* Mobile sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex">
-        <a href="tel:010-5130-1576" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#0a0a0a] text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
-          <i className="ri-phone-line text-base" />전화 상담
+        <a href="/contact" className="flex-1 flex items-center justify-center gap-2 py-5 bg-black text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap">
+          <i className="ri-question-answer-line text-base" />문의하기
         </a>
-        <a href="https://open.kakao.com/o/webmade" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
+        <a href="http://pf.kakao.com/_xcBxnxlX" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap">
           <i className="ri-kakao-talk-fill text-base" />카카오 상담
         </a>
       </div>

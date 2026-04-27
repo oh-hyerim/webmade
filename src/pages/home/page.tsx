@@ -40,14 +40,14 @@ export default function HomePage() {
       {/* Mobile sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex">
         <a
-          href="tel:010-5130-1576"
+          href="/contact"
           className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#0a0a0a] text-white font-medium text-sm cursor-pointer border-r border-white/10 whitespace-nowrap"
         >
-          <i className="ri-phone-line text-base" />
-          전화 상담
+          <i className="ri-question-answer-line text-base" />
+          문의하기
         </a>
         <a
-          href="https://open.kakao.com/o/webmade"
+          href="http://pf.kakao.com/_xcBxnxlX"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-2 py-5 bg-[#FEE500] text-[#111] font-medium text-sm cursor-pointer whitespace-nowrap"

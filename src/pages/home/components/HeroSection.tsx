@@ -58,7 +58,7 @@ export default function HeroSection() {
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-3 items-start">
               <a
-                href="#contact"
+                href="/contact"
                 className="whitespace-nowrap inline-flex items-center justify-center gap-2.5 bg-white text-[#0a0a0a] px-10 py-4 text-sm font-medium tracking-wide hover:bg-white/90 transition-colors cursor-pointer"
               >
                 제작 문의하기
