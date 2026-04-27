@@ -1,4 +1,26 @@
 {
+  "redirects": [
+    {
+      "source": "/Services",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/Work",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/Pricing",
+      "destination": "/pricing",
+      "permanent": true
+    },
+    {
+      "source": "/Process",
+      "destination": "/process",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

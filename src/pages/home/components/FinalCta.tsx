@@ -257,6 +257,7 @@ export default function FinalCta() {
               <a href="#portfolio" className="text-white/20 text-xs font-light hover:text-white/45 transition-colors cursor-pointer whitespace-nowrap">샘플 시안</a>
               <a href="#process" className="text-white/20 text-xs font-light hover:text-white/45 transition-colors cursor-pointer whitespace-nowrap">진행 순서</a>
               <a href="#contact" className="text-white/20 text-xs font-light hover:text-white/45 transition-colors cursor-pointer whitespace-nowrap">문의하기</a>
+              <a href="/privacy" className="text-white/20 text-xs font-light hover:text-white/45 transition-colors cursor-pointer whitespace-nowrap">개인정보처리방침</a>
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-white/[0.05]">

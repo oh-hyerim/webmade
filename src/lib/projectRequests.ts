@@ -1,5 +1,7 @@
 import { supabase } from './supabase';
 
+const PROJECT_REQUESTS_TABLE = import.meta.env.VITE_PROJECT_REQUESTS_TABLE || 'requests';
+
 export const PROJECT_REQUEST_STATUSES = ['대기', '검토중', '진행중', '완료', '보류'] as const;
 
 export type ProjectRequestStatus = (typeof PROJECT_REQUEST_STATUSES)[number];
@@ -57,7 +59,7 @@ export type ProjectRequestUpdate = Partial<Pick<ProjectRequest, 'status' | 'admi
 
 export async function createProjectRequest(payload: ProjectRequestInsert) {
   const { status: _status, admin_memo: _adminMemo, ...publicPayload } = payload;
-  const { error } = await supabase.from('project_requests').insert({
+  const { error } = await supabase.from(PROJECT_REQUESTS_TABLE).insert({
     ...publicPayload,
     status: '대기',
     admin_memo: null,
@@ -68,7 +70,7 @@ export async function createProjectRequest(payload: ProjectRequestInsert) {
 
 export async function fetchProjectRequests(filters: ProjectRequestFilters) {
   let query = supabase
-    .from('project_requests')
+    .from(PROJECT_REQUESTS_TABLE)
     .select('*')
     .order('created_at', { ascending: false });
 
@@ -95,7 +97,7 @@ export async function fetchProjectRequests(filters: ProjectRequestFilters) {
 
 export async function updateProjectRequest(id: string, payload: ProjectRequestUpdate) {
   const { data, error } = await supabase
-    .from('project_requests')
+    .from(PROJECT_REQUESTS_TABLE)
     .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -106,7 +108,7 @@ export async function updateProjectRequest(id: string, payload: ProjectRequestUp
 }
 
 export async function deleteProjectRequests(ids: string[]) {
-  const { error } = await supabase.from('project_requests').delete().in('id', ids);
+  const { error } = await supabase.from(PROJECT_REQUESTS_TABLE).delete().in('id', ids);
   if (error) throw error;
 }
 

@@ -1,6 +1,9 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { createProjectRequest } from '@/lib/projectRequests';
 
+const PROJECT_REQUEST_SUBMIT_COOLDOWN_MS = 60_000;
+const PROJECT_REQUEST_LAST_SUBMIT_KEY = 'webmade:last-project-request-submit';
+
 const mainPurposeOptions = [
   '신규 고객 문의 증가',
   '예약 증가',
@@ -100,12 +103,14 @@ function Field({
   required,
   type = 'text',
   placeholder,
+  maxLength = 120,
 }: {
   label: string;
   name: string;
   required?: boolean;
   type?: string;
   placeholder?: string;
+  maxLength?: number;
 }) {
   return (
     <label className="block">
@@ -116,6 +121,7 @@ function Field({
         name={name}
         type={type}
         required={required}
+        maxLength={maxLength}
         placeholder={placeholder}
         className="w-full px-4 py-3 bg-white border border-[#0a0a0a]/10 rounded-md text-sm text-[#0a0a0a] placeholder-[#0a0a0a]/25 focus:outline-none focus:border-[#0a0a0a]/35 transition-colors"
       />
@@ -128,11 +134,13 @@ function TextArea({
   name,
   rows = 4,
   placeholder,
+  maxLength = 1200,
 }: {
   label: string;
   name: string;
   rows?: number;
   placeholder?: string;
+  maxLength?: number;
 }) {
   return (
     <label className="block">
@@ -140,6 +148,7 @@ function TextArea({
       <textarea
         name={name}
         rows={rows}
+        maxLength={maxLength}
         placeholder={placeholder}
         className="w-full px-4 py-3 bg-white border border-[#0a0a0a]/10 rounded-md text-sm text-[#0a0a0a] placeholder-[#0a0a0a]/25 focus:outline-none focus:border-[#0a0a0a]/35 transition-colors resize-y"
       />
@@ -377,10 +386,21 @@ export default function ProjectRequestPage() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (loading) return;
     setLoading(true);
     setError('');
 
     const fd = new FormData(event.currentTarget);
+    if (String(fd.get('website') || '').trim()) {
+      setLoading(false);
+      return;
+    }
+    const lastSubmit = Number(window.localStorage.getItem(PROJECT_REQUEST_LAST_SUBMIT_KEY) || 0);
+    if (Date.now() - lastSubmit < PROJECT_REQUEST_SUBMIT_COOLDOWN_MS) {
+      setError('잠시 후 다시 제출해주세요.');
+      setLoading(false);
+      return;
+    }
 
     try {
       await createProjectRequest({
@@ -413,6 +433,7 @@ export default function ProjectRequestPage() {
         frequently_asked_questions: text(fd, 'frequently_asked_questions'),
         additional_requests: text(fd, 'additional_requests'),
       });
+      window.localStorage.setItem(PROJECT_REQUEST_LAST_SUBMIT_KEY, String(Date.now()));
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
@@ -457,6 +478,7 @@ export default function ProjectRequestPage() {
         </header>
 
         <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
           <Section title="1. 담당자 기본 정보" description="제작 진행 중 연락드릴 담당자 정보를 적어주세요.">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Field label="담당자명" name="client_name" required />
@@ -634,7 +656,10 @@ export default function ProjectRequestPage() {
 
           <div className="sticky bottom-0 bg-[#f8f7f4]/95 backdrop-blur py-4 border-t border-[#0a0a0a]/6">
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:justify-between">
-              <p className="text-xs text-[#0a0a0a]/45">필수 항목을 작성한 뒤 제출해 주세요. 제출 후에는 검토를 거쳐 제작 기획에 반영됩니다.</p>
+              <p className="text-xs text-[#0a0a0a]/45">
+                필수 항목을 작성한 뒤 제출해 주세요. 제출 후에는 검토를 거쳐 제작 기획에 반영됩니다.{' '}
+                <a href="/privacy" className="underline underline-offset-2 hover:text-[#0a0a0a]">개인정보처리방침</a>
+              </p>
             <button
               type="submit"
               disabled={loading}

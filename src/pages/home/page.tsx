@@ -6,6 +6,7 @@ import PortfolioSection from './components/PortfolioSection';
 import ProcessSection from './components/ProcessSection';
 import PricingSection from './components/PricingSection';
 import FinalCta from './components/FinalCta';
+import SeoHead from '@/components/feature/SeoHead';
 
 export default function HomePage() {
   return (
@@ -13,6 +14,11 @@ export default function HomePage() {
       className="min-h-screen"
       style={{ fontFamily: "'Noto Sans KR', 'Montserrat', sans-serif" }}
     >
+      <SeoHead
+        title="웹메이드 | 문의 전환 중심 홈페이지 제작"
+        description="소상공인과 중소기업을 위한 반응형 홈페이지·랜딩페이지 제작. 구조 설계부터 문의 전환까지 고려해 비대면으로 빠르게 진행합니다."
+        path="/"
+      />
       <Navbar />
       <main>
         {/* 1. Hero */}
