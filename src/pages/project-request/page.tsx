@@ -217,6 +217,17 @@ function text(fd: FormData, key: string) {
   return value || null;
 }
 
+function joinLines(values: string[]) {
+  return values.length > 0 ? values.join('\n') : null;
+}
+
+function buildExtra(lines: Array<string | null | undefined>) {
+  const compact = lines
+    .map((line) => (line ? String(line).trim() : ''))
+    .filter(Boolean);
+  return compact.length > 0 ? compact.join('\n') : null;
+}
+
 function ReferenceSiteManager({
   label,
   helperText,
@@ -402,42 +413,70 @@ export default function ProjectRequestPage() {
     }
 
     try {
+      const name = String(fd.get('client_name') || '').trim();
+      const phone = String(fd.get('phone') || '').trim();
+      const companyName = String(fd.get('company_name') || '').trim();
+      const industry = String(fd.get('business_type') || '').trim();
+
+      // DB(public.requests) 실제 컬럼명 기준으로 key를 100% 일치시켜 insert
       await createProjectRequest({
-        client_name: String(fd.get('client_name') || '').trim(),
-        phone: String(fd.get('phone') || '').trim(),
+        // NOT NULL
+        name,
+
         email: text(fd, 'email'),
-        kakao_id: text(fd, 'kakao_id'),
-        company_name: String(fd.get('company_name') || '').trim(),
-        business_type: String(fd.get('business_type') || '').trim(),
-        business_region: text(fd, 'business_region'),
-        business_period: text(fd, 'business_period'),
-        target_customers: text(fd, 'target_customers'),
-        competitor_links: text(fd, 'competitor_links'),
-        main_purpose: withOther(multiValues.main_purpose, fd.get('main_purpose_other')),
-        primary_cta: withOther(multiValues.primary_cta, fd.get('primary_cta_other')),
-        required_pages: withOther(multiValues.required_pages, fd.get('required_pages_other')),
-        required_features: multiValues.required_features,
-        design_mood: withOther(multiValues.design_mood, fd.get('design_mood_other')),
-        preferred_colors: text(fd, 'preferred_colors'),
-        disliked_colors: text(fd, 'disliked_colors'),
-        reference_sites: referenceSites.length > 0 ? referenceSites.join('\n') : null,
-        disliked_sites: dislikedSites.length > 0 ? dislikedSites.join('\n') : null,
-        provided_materials: multiValues.provided_materials,
-        has_logo: hasLogo,
-        has_domain: hasDomain || text(fd, 'has_domain'),
-        existing_website: text(fd, 'existing_website'),
-        desired_launch_date: text(fd, 'desired_launch_date'),
-        urgency: text(fd, 'urgency'),
-        must_include_content: text(fd, 'must_include_content'),
-        frequently_asked_questions: text(fd, 'frequently_asked_questions'),
-        additional_requests: text(fd, 'additional_requests'),
+        company_name: companyName || null,
+        industry: industry || null,
+        phone: phone || null,
+        kakao: text(fd, 'kakao_id'),
+
+        // 선택/서술형 필드 직렬화
+        region: text(fd, 'business_region'),
+        target: text(fd, 'target_customers'),
+        competitors: text(fd, 'competitor_links'),
+
+        purpose: joinLines(withOther(multiValues.main_purpose, fd.get('main_purpose_other'))),
+        keywords: joinLines(withOther(multiValues.primary_cta, fd.get('primary_cta_other'))),
+        menu: joinLines(withOther(multiValues.required_pages, fd.get('required_pages_other'))),
+        services: joinLines(multiValues.required_features),
+
+        mood: joinLines(withOther(multiValues.design_mood, fd.get('design_mood_other'))),
+        color_main: text(fd, 'preferred_colors'),
+        color_ref: text(fd, 'disliked_colors'),
+
+        ref_site: referenceSites.length > 0 ? referenceSites.join('\n') : null,
+        avoid_style: dislikedSites.length > 0 ? dislikedSites.join('\n') : null,
+
+        faq_topics: text(fd, 'frequently_asked_questions'),
+        must_have: text(fd, 'must_include_content'),
+        detail: text(fd, 'additional_requests'),
+
+        // 현 폼에 없는 컬럼들은 null
+        key_points: null,
+        emphasis: null,
+        contact_other: null,
+        extra: buildExtra([
+          text(fd, 'business_period') ? `운영 기간: ${text(fd, 'business_period')}` : null,
+          hasLogo ? `로고 보유 여부: ${hasLogo}` : null,
+          (hasDomain || text(fd, 'has_domain')) ? `도메인 보유 여부: ${hasDomain || text(fd, 'has_domain')}` : null,
+          text(fd, 'existing_website') ? `기존 홈페이지: ${text(fd, 'existing_website')}` : null,
+          text(fd, 'desired_launch_date') ? `희망 오픈일: ${text(fd, 'desired_launch_date')}` : null,
+          text(fd, 'urgency') ? `급한 일정 여부: ${text(fd, 'urgency')}` : null,
+          multiValues.provided_materials.length > 0 ? `제공 가능한 자료: ${multiValues.provided_materials.join(', ')}` : null,
+        ]),
+
+        status: null,
+        admin_note: null,
+        admin_memo: null,
       });
       window.localStorage.setItem(PROJECT_REQUEST_LAST_SUBMIT_KEY, String(Date.now()));
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (submitError) {
       console.error('Project request submit failed', submitError);
-      setError('제출 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      const message = submitError && typeof submitError === 'object' && 'message' in submitError
+        ? String((submitError as { message?: unknown }).message || '')
+        : '';
+      setError(message ? `제출 중 문제가 발생했습니다. (${message})` : '제출 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.');
     } finally {
       setLoading(false);
     }

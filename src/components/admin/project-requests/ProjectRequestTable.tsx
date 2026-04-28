@@ -9,7 +9,8 @@ type Props = {
   onDelete: (ids: string[]) => void;
 };
 
-function formatDate(value: string) {
+function formatDate(value: string | null) {
+  if (!value) return '-';
   return new Date(value).toLocaleString('ko-KR', {
     month: '2-digit',
     day: '2-digit',
@@ -22,6 +23,13 @@ function summarize(values: string[]) {
   if (!values || values.length === 0) return '-';
   if (values.length <= 2) return values.join(', ');
   return `${values.slice(0, 2).join(', ')} 외 ${values.length - 2}`;
+}
+
+function summarizeText(value: string | null) {
+  if (!value || !value.trim()) return '-';
+  const parts = value.split('\n').map((v) => v.trim()).filter(Boolean);
+  if (parts.length <= 2) return parts.join(', ');
+  return `${parts.slice(0, 2).join(', ')} 외 ${parts.length - 2}`;
 }
 
 export default function ProjectRequestTable({
@@ -93,14 +101,14 @@ export default function ProjectRequestTable({
                   />
                 </td>
                 <td className="px-4 py-3 text-xs text-[#0a0a0a]/40 whitespace-nowrap">{formatDate(request.created_at)}</td>
-                <td className="px-4 py-3 text-sm text-[#0a0a0a] font-medium">{request.company_name}</td>
-                <td className="px-4 py-3 text-sm text-[#0a0a0a]/70 whitespace-nowrap">{request.client_name}</td>
-                <td className="px-4 py-3 text-sm text-[#0a0a0a]/60 whitespace-nowrap">{request.phone}</td>
-                <td className="px-4 py-3 text-sm text-[#0a0a0a]/60">{request.business_type}</td>
-                <td className="px-4 py-3 text-sm text-[#0a0a0a]/50">{summarize(request.main_purpose)}</td>
+                <td className="px-4 py-3 text-sm text-[#0a0a0a] font-medium">{request.company_name || '-'}</td>
+                <td className="px-4 py-3 text-sm text-[#0a0a0a]/70 whitespace-nowrap">{request.name}</td>
+                <td className="px-4 py-3 text-sm text-[#0a0a0a]/60 whitespace-nowrap">{request.phone || '-'}</td>
+                <td className="px-4 py-3 text-sm text-[#0a0a0a]/60">{request.industry || '-'}</td>
+                <td className="px-4 py-3 text-sm text-[#0a0a0a]/50">{summarizeText(request.purpose)}</td>
                 <td className="px-4 py-3">
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#f5f4f0] text-[#0a0a0a]/55 whitespace-nowrap">
-                    {request.status}
+                    {request.status || '-'}
                   </span>
                 </td>
                 <td className="px-4 py-3">
@@ -138,16 +146,16 @@ export default function ProjectRequestTable({
               <button onClick={() => onOpen(request)} className="flex-1 min-w-0 text-left cursor-pointer">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-[#0a0a0a] truncate">{request.company_name}</p>
-                    <p className="text-xs text-[#0a0a0a]/45 mt-1">{request.client_name} · {request.phone}</p>
+                    <p className="text-sm font-medium text-[#0a0a0a] truncate">{request.company_name || '-'}</p>
+                    <p className="text-xs text-[#0a0a0a]/45 mt-1">{request.name} · {request.phone || '-'}</p>
                   </div>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#f5f4f0] text-[#0a0a0a]/55 whitespace-nowrap">
-                    {request.status}
+                    {request.status || '-'}
                   </span>
                 </div>
-                <p className="text-xs text-[#0a0a0a]/45">{request.business_type}</p>
-                <p className="text-xs text-[#0a0a0a]/55 mt-2 line-clamp-2">{summarize(request.main_purpose)}</p>
-                <p className="text-[10px] text-[#0a0a0a]/30 mt-2">{formatDate(request.created_at)}</p>
+                <p className="text-xs text-[#0a0a0a]/45">{request.industry || '-'}</p>
+                <p className="text-xs text-[#0a0a0a]/55 mt-2 line-clamp-2">{summarizeText(request.purpose)}</p>
+                {request.created_at && <p className="text-[10px] text-[#0a0a0a]/30 mt-2">{formatDate(request.created_at)}</p>}
               </button>
               <button
                 onClick={() => onDelete([request.id])}

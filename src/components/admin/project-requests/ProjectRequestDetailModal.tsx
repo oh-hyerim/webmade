@@ -3,7 +3,6 @@ import {
   formatProjectRequestForGpt,
   PROJECT_REQUEST_STATUSES,
   ProjectRequest,
-  ProjectRequestStatus,
   updateProjectRequest,
 } from '@/lib/projectRequests';
 
@@ -19,6 +18,10 @@ function text(value?: string | null) {
 
 function list(value?: string[] | null) {
   return value && value.length > 0 ? value.join(', ') : '-';
+}
+
+function textBlock(value?: string | null) {
+  return value && value.trim() ? value.trim() : '-';
 }
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
@@ -41,7 +44,7 @@ function DetailSection({ title, children }: { title: string; children: React.Rea
 
 export default function ProjectRequestDetailModal({ request, onClose, onSaved }: Props) {
   const [memo, setMemo] = useState('');
-  const [status, setStatus] = useState<ProjectRequestStatus>('대기');
+  const [status, setStatus] = useState<string>('대기');
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [copyMessage, setCopyMessage] = useState('');
@@ -49,7 +52,7 @@ export default function ProjectRequestDetailModal({ request, onClose, onSaved }:
   useEffect(() => {
     if (!request) return;
     setMemo(request.admin_memo || '');
-    setStatus(request.status);
+    setStatus(request.status || '대기');
     setMessage('');
     setCopyMessage('');
   }, [request]);
@@ -126,62 +129,56 @@ export default function ProjectRequestDetailModal({ request, onClose, onSaved }:
 
           <DetailSection title="기본 정보">
             <Row label="업체명" value={text(request.company_name)} />
-            <Row label="담당자명" value={text(request.client_name)} />
+            <Row label="담당자명" value={text(request.name)} />
             <Row label="연락처" value={text(request.phone)} />
             <Row label="이메일" value={text(request.email)} />
-            <Row label="카카오톡 ID" value={text(request.kakao_id)} />
+            <Row label="카카오" value={text(request.kakao)} />
           </DetailSection>
 
           <DetailSection title="사업 정보">
-            <Row label="업종" value={text(request.business_type)} />
-            <Row label="지역" value={text(request.business_region)} />
-            <Row label="운영 기간" value={text(request.business_period)} />
-            <Row label="주요 고객층" value={text(request.target_customers)} />
+            <Row label="업종" value={text(request.industry)} />
+            <Row label="지역" value={text(request.region)} />
+            <Row label="주요 고객층" value={text(request.target)} />
             <div className="md:col-span-2">
-              <Row label="경쟁업체/참고업체" value={text(request.competitor_links)} />
+              <Row label="경쟁업체/참고업체" value={text(request.competitors)} />
             </div>
           </DetailSection>
 
           <DetailSection title="제작 방향">
-            <Row label="홈페이지 제작 목적" value={list(request.main_purpose)} />
-            <Row label="전환 목표" value={list(request.primary_cta)} />
-            <Row label="필수 페이지" value={list(request.required_pages)} />
-            <Row label="필요 기능" value={list(request.required_features)} />
+            <Row label="홈페이지 제작 목적" value={textBlock(request.purpose)} />
+            <Row label="전환/키워드" value={textBlock(request.keywords)} />
+            <Row label="메뉴/페이지 구성" value={textBlock(request.menu)} />
+            <Row label="필요 기능" value={textBlock(request.services)} />
           </DetailSection>
 
           <DetailSection title="디자인">
-            <Row label="원하는 분위기" value={list(request.design_mood)} />
-            <Row label="선호 컬러" value={text(request.preferred_colors)} />
-            <Row label="피하고 싶은 컬러" value={text(request.disliked_colors)} />
+            <Row label="원하는 분위기" value={textBlock(request.mood)} />
+            <Row label="선호 컬러" value={text(request.color_main)} />
+            <Row label="참고/피하고 싶은 컬러" value={text(request.color_ref)} />
             <div className="md:col-span-2">
-              <Row label="참고 사이트" value={text(request.reference_sites)} />
+              <Row label="참고 사이트" value={text(request.ref_site)} />
             </div>
             <div className="md:col-span-2">
-              <Row label="싫은 사이트" value={text(request.disliked_sites)} />
+              <Row label="피하고 싶은 스타일/사이트" value={text(request.avoid_style)} />
             </div>
           </DetailSection>
 
           <DetailSection title="준비 자료">
-            <Row label="제공 가능한 자료" value={list(request.provided_materials)} />
-            <Row label="로고 보유 여부" value={text(request.has_logo)} />
-            <Row label="기존 홈페이지" value={text(request.existing_website)} />
-            <Row label="도메인 보유 여부" value={text(request.has_domain)} />
-          </DetailSection>
-
-          <DetailSection title="일정">
-            <Row label="희망 오픈일" value={text(request.desired_launch_date)} />
-            <Row label="급한 일정 여부" value={text(request.urgency)} />
+            <Row label="요약/기타" value={textBlock(request.extra)} />
+            <Row label="강조 포인트" value={textBlock(request.key_points)} />
+            <Row label="꼭 강조" value={textBlock(request.emphasis)} />
+            <Row label="연락 기타" value={textBlock(request.contact_other)} />
           </DetailSection>
 
           <DetailSection title="추가 요청사항">
             <div className="md:col-span-2">
-              <Row label="꼭 들어갔으면 하는 내용" value={text(request.must_include_content)} />
+              <Row label="꼭 들어갔으면 하는 내용" value={text(request.must_have)} />
             </div>
             <div className="md:col-span-2">
-              <Row label="고객이 자주 묻는 질문" value={text(request.frequently_asked_questions)} />
+              <Row label="FAQ 주제" value={text(request.faq_topics)} />
             </div>
             <div className="md:col-span-2">
-              <Row label="추가 요청사항" value={text(request.additional_requests)} />
+              <Row label="상세/추가" value={text(request.detail)} />
             </div>
           </DetailSection>
 
@@ -193,7 +190,7 @@ export default function ProjectRequestDetailModal({ request, onClose, onSaved }:
                 <select
                   value={status}
                   onChange={(event) => {
-                    setStatus(event.target.value as ProjectRequestStatus);
+                    setStatus(event.target.value);
                     setMessage('');
                   }}
                   className="w-full px-3 py-2.5 border border-[#0a0a0a]/10 rounded-md text-sm text-[#0a0a0a] focus:outline-none focus:border-[#0a0a0a]/30"

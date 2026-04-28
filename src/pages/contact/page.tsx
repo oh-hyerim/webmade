@@ -127,23 +127,33 @@ export default function ContactPage() {
       <section ref={formRef} className="bg-[#f5f4f0]">
         {submitted ? (
           /* Success state */
-          <div className="reveal-item opacity-0 translate-y-6 transition-all duration-700 flex flex-col items-center text-center py-24 md:py-32">
+          <div className="reveal-item flex flex-col items-center text-center py-24 md:py-32">
             <div className="w-10 h-10 border border-[#0a0a0a]/20 flex items-center justify-center mb-10">
               <i className="ri-check-line text-[#0a0a0a] text-lg" />
             </div>
-            <h2 className="font-serif text-[#0a0a0a] text-2xl mb-4">문의가 접수되었습니다</h2>
+            <h2 className="font-serif text-[#0a0a0a] text-2xl mb-4">문의가 접수되었습니다.</h2>
             <p className="text-[#0a0a0a]/45 text-sm font-light leading-relaxed mb-10 max-w-sm">
-              24시간 이내로 답변드립니다.<br />더 빠른 상담은 카카오톡을 이용해 주세요.
+              답변은 최대 1일정도 걸릴 수 있습니다.<br />빠른 상담이 필요하시면 아래 버튼을 이용해주세요.
             </p>
-            <a
-              href="http://pf.kakao.com/_xcBxnxlX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#FEE500] text-[#111] font-medium text-xs tracking-wide cursor-pointer whitespace-nowrap"
-            >
-              <i className="ri-kakao-talk-fill" />
-              카카오톡으로 이어서 상담
-            </a>
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+              <a
+                href="tel:010-5130-1576"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-4 bg-[#0a0a0a] text-white font-medium text-sm tracking-wide cursor-pointer whitespace-nowrap"
+              >
+                <i className="ri-phone-line" />
+                전화 상담
+              </a>
+              <a
+                href="http://pf.kakao.com/_xcBxnxlX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-7 py-4 bg-[#FEE500] text-[#111] font-medium text-sm tracking-wide cursor-pointer whitespace-nowrap"
+              >
+                <i className="ri-kakao-talk-fill" />
+                카카오톡 상담
+              </a>
+            </div>
+            <p className="text-[#0a0a0a]/35 text-xs font-light mt-4">문의시간 15:00~18:00</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
