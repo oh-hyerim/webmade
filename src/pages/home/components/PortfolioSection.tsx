@@ -7,7 +7,7 @@ const featured = {
   structureTag: '신뢰 → 서비스 → 예약',
   designNote: '첫 화면 신뢰 확보 중심 구조',
   intent: '처음 방문한 환자가 진료 항목과 예약 방법을 빠르게 파악할 수 있도록 정보 흐름을 설계한 샘플',
-  img: 'https://readdy.ai/api/search-image?query=ultra%20minimal%20dark%20medical%20clinic%20website%20design%20concept%2C%20full%20screen%20hero%20layout%2C%20elegant%20serif%20typography%20on%20deep%20black%20background%2C%20sophisticated%20healthcare%20landing%20page%2C%20monochrome%20editorial%20aesthetic%2C%20clean%20white%20text%20on%20dark%2C%20premium%20trustworthy%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=1400&height=800&seq=port-v3-featured&orientation=landscape',
+  img: '/images/dk.png',
 };
 
 const secondary = [
@@ -18,7 +18,7 @@ const secondary = [
     structureTag: '신뢰 → 실적 → 문의',
     designNote: '문의 유도 흐름에 맞춘 구성',
     intent: '처음 방문한 잠재 고객이 "믿을 수 있는 곳"이라는 인상을 받을 수 있도록 신뢰 요소를 앞에 배치한 구성',
-    img: 'https://readdy.ai/api/search-image?query=premium%20consulting%20firm%20website%20design%20concept%20on%20dark%20background%2C%20large%20editorial%20typography%2C%20professional%20business%20layout%2C%20monochrome%20black%20and%20white%20palette%2C%20sophisticated%20corporate%20aesthetic%2C%20clean%20minimal%20design%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=600&seq=port-v3-consulting&orientation=landscape',
+    img: '/images/mdog.png',
   },
   {
     label: 'Sample Landing Page',
@@ -27,7 +27,7 @@ const secondary = [
     structureTag: '감성 → 특징 → 구매',
     designNote: '정보 전달보다 전환을 우선한 메인 설계',
     intent: '브랜드 감성을 먼저 전달하고, 제품 특징 → 구매 버튼 순서로 자연스럽게 전환을 유도하는 흐름',
-    img: 'https://readdy.ai/api/search-image?query=luxury%20beauty%20brand%20website%20design%20concept%2C%20dark%20elegant%20background%2C%20feminine%20editorial%20typography%2C%20sophisticated%20cosmetics%20landing%20page%2C%20monochrome%20dark%20aesthetic%2C%20premium%20beauty%20brand%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=700&height=480&seq=port-v3-beauty&orientation=landscape',
+    img: '/images/tvt.png',
   },
 ];
 

@@ -2,93 +2,72 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/pages/home/components/Navbar';
 import SeoHead from '@/components/feature/SeoHead';
+import { useBackCloseModal } from '@/hooks/useBackCloseModal';
 
 const works = [
   {
     num: '01',
     label: 'Demo Project',
-    category: '피부과 / 랜딩페이지',
-    title: '신뢰형 메인 구조',
-    structureTag: '신뢰 → 서비스 → 예약',
-    designNote: '첫 화면 신뢰 확보 중심 구조',
-    intent: '처음 방문한 환자가 진료 항목과 예약 방법을 빠르게 파악할 수 있도록 정보 흐름을 설계한 샘플입니다.',
-    tags: ['의료', '랜딩페이지', '신뢰형'],
-    img: 'https://readdy.ai/api/search-image?query=ultra%20minimal%20dark%20medical%20clinic%20website%20design%20concept%2C%20full%20screen%20hero%20layout%2C%20elegant%20serif%20typography%20on%20deep%20black%20background%2C%20sophisticated%20healthcare%20landing%20page%2C%20monochrome%20editorial%20aesthetic%2C%20clean%20white%20text%20on%20dark%2C%20premium%20trustworthy%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=1400&height=900&seq=work-gallery-01&orientation=landscape',
+    category: '택배회사 / 서비스 홈페이지',
+    title: '물류 신뢰 중심 구조',
+    structureTag: '신뢰 → 서비스 → 문의',
+    designNote: '빠른 이해와 문의 전환을 위한 구조',
+    intent: '처음 방문한 고객이 배송 서비스와 이용 방법을 한눈에 이해하고, 바로 문의로 이어질 수 있도록 설계한 물류 서비스형 홈페이지입니다.',
+    tags: ['택배', '물류', '신뢰형'],
+    img: '/images/dk.png',
+    siteUrl: 'https://dkexpress.us',
     size: 'large',
   },
   {
     num: '02',
     label: 'Concept Work',
-    category: '컨설팅 기업 / 회사소개',
-    title: '전문성 중심 구성',
-    structureTag: '신뢰 → 실적 → 문의',
-    designNote: '문의 유도 흐름에 맞춘 구성',
-    intent: '처음 방문한 잠재 고객이 "믿을 수 있는 곳"이라는 인상을 받을 수 있도록 신뢰 요소를 앞에 배치한 구성입니다.',
-    tags: ['기업', '회사소개', '전문직'],
-    img: 'https://readdy.ai/api/search-image?query=premium%20consulting%20firm%20website%20design%20concept%20on%20dark%20background%2C%20large%20editorial%20typography%2C%20professional%20business%20layout%2C%20monochrome%20black%20and%20white%20palette%2C%20sophisticated%20corporate%20aesthetic%2C%20clean%20minimal%20design%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=700&seq=work-gallery-02&orientation=landscape',
+    category: '반려동물 공방 / 감성형 홈페이지',
+    title: '감성 스토리 중심 구성',
+    structureTag: '감성 → 공감 → 문의',
+    designNote: '브랜드 감정 전달 중심 설계',
+    intent: '반려동물과의 소중한 기억을 담는 서비스 특성에 맞게 감성적인 스토리 전달을 중심으로 구성하고, 자연스럽게 문의로 이어지도록 설계한 공방형 홈페이지입니다.',
+    tags: ['공방', '반려동물', '감성형'],
+    img: '/images/mdog.png',
+    siteUrl: 'https://rememberdog.readdy.co',
     size: 'medium',
   },
   {
     num: '03',
-    label: 'Sample Landing Page',
-    category: '뷰티 브랜드 / 상세페이지',
-    title: '감성형 전환 구조',
-    structureTag: '감성 → 특징 → 구매',
-    designNote: '정보 전달보다 전환을 우선한 메인 설계',
-    intent: '브랜드 감성을 먼저 전달하고, 제품 특징 → 구매 버튼 순서로 자연스럽게 전환을 유도하는 흐름입니다.',
-    tags: ['뷰티', '브랜드', '전환형'],
-    img: 'https://readdy.ai/api/search-image?query=luxury%20beauty%20brand%20website%20design%20concept%2C%20dark%20elegant%20background%2C%20feminine%20editorial%20typography%2C%20sophisticated%20cosmetics%20landing%20page%2C%20monochrome%20dark%20aesthetic%2C%20premium%20beauty%20brand%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=700&seq=work-gallery-03&orientation=landscape',
+    label: 'Sample Project',
+    category: '출판사 / 콘텐츠 플랫폼',
+    title: '콘텐츠 아카이브 구조',
+    structureTag: '콘텐츠 → 신뢰 → 문의',
+    designNote: '글 중심 구조 설계',
+    intent: '전문가의 콘텐츠를 중심으로 신뢰를 형성하고, 축적된 글을 기반으로 출판 및 문의로 이어질 수 있도록 설계한 출판 플랫폼형 홈페이지입니다.',
+    tags: ['출판', '콘텐츠', '아카이브'],
+    img: '/images/tvt.png',
+    siteUrl: 'https://thevenuetimes.readdy.co',
     size: 'medium',
   },
   {
     num: '04',
     label: 'Concept Work',
-    category: '소상공인 서비스업 / 문의형',
-    title: '소상공인 문의 전환형',
-    structureTag: '소개 → 신뢰 → 문의',
-    designNote: '업종 설명 없이도 첫 화면에서 즉시 이해',
-    intent: '업종 설명 없이도 첫 화면에서 무엇을 하는 곳인지 바로 읽히고, 문의 버튼까지 자연스럽게 이어지는 흐름입니다.',
-    tags: ['소상공인', '서비스업', '문의형'],
-    img: 'https://readdy.ai/api/search-image?query=minimal%20small%20business%20service%20website%20design%20concept%2C%20dark%20background%20with%20clean%20layout%2C%20simple%20editorial%20typography%2C%20local%20service%20landing%20page%20aesthetic%2C%20monochrome%20dark%20tones%2C%20premium%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=700&seq=work-gallery-04&orientation=landscape',
-    size: 'medium',
-  },
-  {
-    num: '05',
-    label: 'Sample Work',
-    category: '교육 / 학원 랜딩페이지',
-    title: '교육 신뢰형 구조',
-    structureTag: '커리큘럼 → 후기 → 등록',
-    designNote: '수강 결정까지 이어지는 정보 흐름',
-    intent: '커리큘럼과 강사 소개를 통해 신뢰를 쌓고, 수강생 후기를 통해 결정을 돕는 구조입니다.',
-    tags: ['교육', '학원', '등록형'],
-    img: 'https://readdy.ai/api/search-image?query=clean%20education%20academy%20website%20design%20concept%2C%20dark%20minimal%20background%2C%20editorial%20typography%2C%20sophisticated%20learning%20platform%20aesthetic%2C%20monochrome%20dark%20tones%2C%20premium%20educational%20feel%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=700&seq=work-gallery-05&orientation=landscape',
-    size: 'medium',
-  },
-  {
-    num: '06',
-    label: 'Concept Work',
-    category: '요식업 / 브랜드 소개',
-    title: '브랜드 스토리형',
-    structureTag: '브랜드 → 메뉴 → 위치',
-    designNote: '브랜드 정체성을 먼저 전달하는 구조',
-    intent: '브랜드 스토리와 철학을 먼저 전달하고, 메뉴와 위치 정보를 자연스럽게 연결하는 구조입니다.',
-    tags: ['요식업', '브랜드', '소개형'],
-    img: 'https://readdy.ai/api/search-image?query=elegant%20restaurant%20brand%20website%20design%20concept%2C%20dark%20sophisticated%20background%2C%20minimal%20editorial%20layout%2C%20premium%20food%20brand%20aesthetic%2C%20monochrome%20dark%20tones%2C%20clean%20typography%2C%20no%20people%2C%20abstract%20web%20design&width=900&height=700&seq=work-gallery-06&orientation=landscape',
+    category: '푸드 브랜드 / 숙박 브랜드',
+    title: '복합 브랜드 통합 구조',
+    structureTag: '브랜드 → 경험 → 예약',
+    designNote: '두 브랜드를 하나로 연결한 설계',
+    intent: '푸드 브랜드와 숙박 브랜드를 하나의 흐름으로 연결해 고객이 자연스럽게 경험 → 예약까지 이어질 수 있도록 구성한 복합 브랜드형 홈페이지입니다.',
+    tags: ['푸드', '숙박', '브랜드형'],
+    img: '/images/mfnb.png',
+    siteUrl: 'https://michinfnb.readdy.co',
     size: 'medium',
   },
 ];
 
-const filterTags = ['전체', '의료', '기업', '뷰티', '소상공인', '교육', '요식업'];
-
 export default function WorkPage() {
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLElement>(null);
-  const [activeFilter, setActiveFilter] = useState('전체');
   const [selectedWork, setSelectedWork] = useState<typeof works[0] | null>(null);
 
-  const filtered = activeFilter === '전체'
-    ? works
-    : works.filter((w) => w.tags.includes(activeFilter));
+  useBackCloseModal({
+    isOpen: Boolean(selectedWork),
+    onClose: () => setSelectedWork(null),
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -171,30 +150,13 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* Filter + Image Grid */}
+      {/* Image Grid */}
       <section ref={gridRef} className="bg-[#0d0d0d] py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-8 md:px-16">
 
-          {/* Filter */}
-          <div className="reveal-item translate-y-0 transition-all duration-700 flex flex-wrap gap-2 mb-12 md:mb-16">
-            {filterTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setActiveFilter(tag)}
-                className={`whitespace-nowrap text-xs font-light px-4 py-2 border transition-all cursor-pointer ${
-                  activeFilter === tag
-                    ? 'border-white/50 text-white bg-white/10'
-                    : 'border-white/[0.08] text-white/35 hover:border-white/20 hover:text-white/55'
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-
           {/* Image Grid — masonry-like */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-            {filtered.map((work, i) => {
+            {works.map((work, i) => {
               const isLarge = work.size === 'large';
               return (
                 <div
@@ -310,14 +272,25 @@ export default function WorkPage() {
                 ))}
               </div>
 
-              <Link
-                to="/contact"
-                onClick={() => setSelectedWork(null)}
-                className="whitespace-nowrap inline-flex items-center gap-2.5 bg-white text-[#0a0a0a] px-8 py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-colors cursor-pointer"
-              >
-                이 방향으로 문의하기
-                <i className="ri-arrow-right-line" />
-              </Link>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <a
+                  href={selectedWork.siteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap inline-flex items-center justify-center gap-2.5 border border-white/20 text-white/70 px-8 py-3.5 text-sm font-light tracking-wide hover:border-white/40 hover:text-white transition-colors cursor-pointer"
+                >
+                  사이트 구경가기
+                  <i className="ri-external-link-line" />
+                </a>
+                <Link
+                  to="/contact"
+                  onClick={() => setSelectedWork(null)}
+                  className="whitespace-nowrap inline-flex items-center justify-center gap-2.5 bg-white text-[#0a0a0a] px-8 py-3.5 text-sm font-medium tracking-wide hover:bg-white/90 transition-colors cursor-pointer sm:ml-auto"
+                >
+                  이 방향으로 문의하기
+                  <i className="ri-arrow-right-line" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

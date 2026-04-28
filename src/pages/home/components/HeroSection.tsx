@@ -18,7 +18,7 @@ export default function HeroSection() {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=ultra%20minimal%20dark%20studio%20workspace%20with%20soft%20directional%20light%2C%20monochrome%20charcoal%20and%20black%20tones%2C%20subtle%20grain%20texture%2C%20no%20objects%2C%20pure%20abstract%20dark%20editorial%20atmosphere%2C%20premium%20photography%2C%20very%20dark%20with%20faint%20warm%20light%20from%20one%20side%2C%20sophisticated%20and%20quiet&width=1440&height=900&seq=hero-editorial-bg-v3&orientation=landscape"
+          src="/images/a6803a87086e4279407948e7d9f106a2.jpg"
           alt=""
           width={1440}
           height={900}

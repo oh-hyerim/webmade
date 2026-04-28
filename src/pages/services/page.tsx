@@ -115,7 +115,7 @@ export default function ServicesPage() {
       >
         <div className="absolute inset-0">
           <img
-            src="https://readdy.ai/api/search-image?query=ultra%20minimal%20dark%20abstract%20background%20with%20subtle%20texture%2C%20monochrome%20deep%20black%20tones%2C%20soft%20directional%20light%20from%20one%20side%2C%20premium%20editorial%20atmosphere%2C%20no%20objects%2C%20pure%20abstract%20dark%20surface%2C%20sophisticated%20and%20quiet%2C%20very%20dark&width=1440&height=700&seq=svc-hero-bg-v2&orientation=landscape"
+            src="/images/78f6e27427a4d5f5e3141a47513e4d84.jpg"
             alt=""
             className="w-full h-full object-cover object-center opacity-20"
           />

@@ -10,6 +10,7 @@ import {
   ProjectRequestFilters as Filters,
 } from '@/lib/projectRequests';
 import { supabase } from '@/lib/supabase';
+import { useBackCloseModal } from '@/hooks/useBackCloseModal';
 
 const initialFilters: Filters = {
   companyName: '',
@@ -86,6 +87,11 @@ export default function AdminProjectRequestsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const hasActiveFilters = filters.companyName || filters.clientName || filters.phone || filters.businessType || filters.status !== 'all';
+
+  useBackCloseModal({
+    isOpen: Boolean(selectedRequest),
+    onClose: () => setSelectedRequest(null),
+  });
 
   const loadRequests = useCallback(async () => {
     setLoading(true);

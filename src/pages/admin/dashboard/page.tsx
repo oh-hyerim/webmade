@@ -5,6 +5,7 @@ import ContactDetailModal from './components/ContactDetailModal';
 import ContactFilters, { FilterState } from './components/ContactFilters';
 import ContactTable from './components/ContactTable';
 import StatsCharts from './components/StatsCharts';
+import { useBackCloseModal } from '@/hooks/useBackCloseModal';
 
 const PAGE_SIZE = 30;
 
@@ -207,17 +208,12 @@ export default function AdminDashboard() {
     navigate(query ? `/admin?${query}` : '/admin', { replace: true });
   };
 
-  // Handle browser back button to close popup only
-  useEffect(() => {
-    const onPopState = () => {
-      const p = new URLSearchParams(window.location.search);
-      if (!p.get('contact')) {
-        setSelectedContact(null);
-      }
-    };
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
-  }, []);
+  useBackCloseModal({
+    isOpen: Boolean(selectedContact),
+    onClose: handleModalClose,
+    // 이 페이지는 URL 쿼리(?contact=)가 이미 history 스택 역할을 하므로 pushState는 생략
+    pushStateOnOpen: false,
+  });
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
