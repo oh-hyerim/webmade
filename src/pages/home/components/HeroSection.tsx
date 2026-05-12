@@ -84,7 +84,7 @@ export default function HeroSection() {
             {/* 상징적 숫자 */}
             <div className="mb-12 pb-12 border-b border-white/[0.06]">
               <div className="flex items-baseline gap-4">
-                <span className="font-serif text-[clamp(5rem,8vw,7.5rem)] text-white/[0.05] leading-none tracking-tight select-none">3</span>
+                <span className="font-serif text-[clamp(5rem,8vw,7.5rem)] text-white leading-none tracking-tight select-none">3</span>
                 <div>
                   <p className="text-white/30 text-xs font-light leading-snug">가지 기준으로</p>
                   <p className="text-white/30 text-xs font-light leading-snug">화면을 설계합니다</p>
